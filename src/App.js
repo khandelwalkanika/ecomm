@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Navbar from "./components/navbar";
-import Listing from "./components/listing";
+import Navbar from "./components/Header/navbar";
+import Listing from "./components/Product/listing";
 import data from "./components/data.json";
-import Cart from "./components/cart";
+import Cart from "./components/Cart/cart";
 class App extends Component {
   state = {
     listingsRings: data.listingsRings,

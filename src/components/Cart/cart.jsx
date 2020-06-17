@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./listing.css";
+import { Button, Card } from "./node_modules/react-bootstrap";
 class Cart extends Component {
   componentDidUpdate() {
     console.log("--------<>", this.props);
@@ -13,13 +13,9 @@ class Cart extends Component {
     return (
       <div>
         <div>
-          <button
-            className="btn btn-primary"
-            style={{ float: "right" }}
-            onClick={() => this.props.showListings()}
-          >
+          <Button variant="primary" onClick={() => this.props.showListings()}>
             Continue Shopping
-          </button>
+          </Button>
         </div>
 
         <span>You have {this.props.cartData.length} items</span>
