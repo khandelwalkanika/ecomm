@@ -1,0 +1,14 @@
+.div-style {
+  display: flex;
+}
+
+.idiv-size {
+  width: 100px;
+  text-align: center;
+  padding-right: 200px;
+  padding-bottom: 50px;
+}
+
+.image-size {
+  height: 99px;
+}
