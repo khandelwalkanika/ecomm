@@ -3,8 +3,11 @@ import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Header/navbar";
 import Listing from "./components/Product/listing";
+import Login from "./components/Login/login";
 import data from "./components/data.json";
 import Cart from "./components/Cart/cart";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+
 class App extends Component {
   state = {
     listingsRings: data.listingsRings,
@@ -39,17 +42,11 @@ class App extends Component {
   };
 
   clickCart = () => {
-    this.setState({ activeScreen: "cart" });
-  };
-  onShowingLists = () => {
-    this.setState({ activeScreen: "listings" });
+    // this.props.history.push(path);
   };
 
   deleteCartItem = (cartDataId, cartDataType, cartData) => {
-    /** listingsRings: (this.state.listingsRings[cartDataId].numOfItems = 0),
-      listingsNecklace: this.state.listingsNecklace.filter((item) => {
-        return item.type !== cartDataType || item.id !== cartDataId;
-      }), */
+    /** listingsRings: (this.state.listingsRings[cartDataId].numOfItems = 0), */
     this.setState({
       cart: cartData.filter((item) => {
         return !(item.type === cartDataType && item.id === cartDataId);
@@ -59,26 +56,39 @@ class App extends Component {
   render() {
     return (
       <>
-        <Navbar onClickCart={this.clickCart} />
-        <hr />
-        <main className="container">
-          <div hidden={this.state.activeScreen !== "listings"}>
-            <Listing
-              // onReset={this.handleReset}
-              // onDelete={this.handleDelete}
-              onAdding={this.addToCart}
-              rings={this.state.listingsRings}
-              necklace={this.state.listingsNecklace}
-            />
+        <BrowserRouter>
+          <div>
+            <Navbar onClickCart={this.clickCart} />
+            <hr />
+
+            <main className="container">
+              <Route path="/" exact={true} render={() => <Login />} />
+
+              <Route
+                path="/listings"
+                exact={true}
+                render={() => (
+                  <Listing
+                    onAdding={this.addToCart}
+                    rings={this.state.listingsRings}
+                    necklace={this.state.listingsNecklace}
+                  />
+                )}
+              />
+
+              <Route
+                path="/cart"
+                exact
+                render={() => (
+                  <Cart
+                    cartData={this.state.cart}
+                    onDelete={this.deleteCartItem}
+                  />
+                )}
+              />
+            </main>
           </div>
-          <div hidden={this.state.activeScreen !== "cart"}>
-            <Cart
-              cartData={this.state.cart}
-              onDelete={this.deleteCartItem}
-              showListings={this.onShowingLists}
-            />
-          </div>
-        </main>
+        </BrowserRouter>
       </>
     );
   }

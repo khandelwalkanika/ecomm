@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { Button, Card } from "./node_modules/react-bootstrap";
+import { Button, Card } from "react-bootstrap";
+import history from "../history";
+// import { useHistory } from "react-router-dom";
+
+import { Link, withRouter } from "react-router-dom";
 class Cart extends Component {
   componentDidUpdate() {
     console.log("--------<>", this.props);
@@ -9,11 +13,17 @@ class Cart extends Component {
     totalPrice: 0,
     cartData: [],
   };
+
   render() {
     return (
       <div>
         <div>
-          <Button variant="primary" onClick={() => this.props.showListings()}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              this.props.history.push("/listings");
+            }}
+          >
             Continue Shopping
           </Button>
         </div>
@@ -59,7 +69,7 @@ class Cart extends Component {
                     this.props.onDelete(list.id, list.type, this.props.cartData)
                   }
                   type="button"
-                  class="btn btn-danger"
+                  className="btn btn-danger"
                 >
                   Delete
                 </button>
@@ -72,7 +82,7 @@ class Cart extends Component {
         <hr />
         <div>
           <span className="badge badge-pill badge-light">
-            <button type="button" class="btn btn-outline-success">
+            <button type="button" className="btn btn-outline-success">
               Total Price :{getTotalPrice(this.props.cartData)}
             </button>
           </span>
@@ -99,7 +109,7 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+export default withRouter(Cart);
 
 function getTotalPrice(cartData) {
   let totalPrice = 0;

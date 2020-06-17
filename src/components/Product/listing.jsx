@@ -1,6 +1,6 @@
-import React, { Component } from "./node_modules/react";
+import React, { Component } from "react";
 import "./listing.css";
-import { Button, Card } from "./node_modules/react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 //import Lists from "./lists";
 class Listing extends Component {
   render() {
