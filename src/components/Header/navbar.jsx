@@ -1,10 +1,28 @@
 import React, { Component } from "react";
 import history from "../history";
 import { Link, withRouter } from "react-router-dom";
+import { Button, Container, Navbar } from "react-bootstrap";
 
-const Navbar = (props) => {
+const HeaderNav = (props) => {
   return (
-    <nav className="navbar navbar-light bg-light">
+    <Navbar expand="lg" variant="light" bg="light">
+      <Container>
+        <Navbar.Brand href="#">Net-Jewels-Price</Navbar.Brand>
+        <Button
+          variant="outline-success"
+          onClick={() => {
+            props.onClickCart(props);
+            props.history.push("/cart");
+          }}
+        >
+          Cart
+        </Button>{" "}
+      </Container>
+    </Navbar>
+  );
+};
+
+/**<nav className="navbar navbar-light bg-light">
       <a className="navbar-brand" href="#">
         Net-Jewels-Price
       </a>
@@ -18,8 +36,5 @@ const Navbar = (props) => {
       >
         Cart
       </button>
-    </nav>
-  );
-};
-
-export default withRouter(Navbar);
+    </nav> */
+export default withRouter(HeaderNav);

@@ -25,7 +25,10 @@ class LoginPage extends Component {
                 <Form.Check type="checkbox" label="Check me out" />
               </Form.Group>
               <Button variant="primary" type="submit">
-                Submit
+                Login
+              </Button>
+              <Button variant="primary" type="submit">
+                Register
               </Button>
             </Form>
           </Row>
