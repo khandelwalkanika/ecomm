@@ -1,40 +1,30 @@
-import React from "react";
-//import history from "../history";
+import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Button, Container, Navbar } from "react-bootstrap";
 
-const HeaderNav = (props) => {
-  return (
-    <Navbar expand="lg" variant="light" bg="light">
-      <Container>
-        <Navbar.Brand href="#">Net-Jewels-Price</Navbar.Brand>
-        <Button
-          variant="outline-success"
-          onClick={() => {
-            props.onClickCart(props);
-            props.history.push("/cart");
-          }}
-        >
-          Cart
-        </Button>{" "}
-      </Container>
-    </Navbar>
-  );
-};
-
-/**<nav className="navbar navbar-light bg-light">
-      <a className="navbar-brand" href="#">
-        Net-Jewels-Price
-      </a>
-      <button
-        onClick={() => {
-          props.onClickCart(props);
-          props.history.push("/cart");
-        }}
-        className="btn btn-outline-success my-2 my-sm-0"
-        type="button"
-      >
-        Cart
-      </button>
-    </nav> */
+class HeaderNav extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+  render() {
+    return (
+      <Navbar expand="lg" variant="light" bg="light">
+        <Container>
+          <Navbar.Brand href="#">Net-Jewels-Price</Navbar.Brand>
+          <Button
+            hidden={this.props.isAuth ? "" : "hidden"}
+            variant="outline-success"
+            onClick={() => {
+              this.props.onClickCart(this.props);
+              this.props.history.push("/cart");
+            }}
+          >
+            Cart
+          </Button>{" "}
+        </Container>
+      </Navbar>
+    );
+  }
+}
 export default withRouter(HeaderNav);

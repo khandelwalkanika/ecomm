@@ -6,20 +6,21 @@ import Login from "./components/Auth/login";
 import Register from "./components/Auth/register";
 import data from "./components/data.json";
 import Cart from "./components/Cart/cart";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-//import { Provider } from "react-redux";
-import store from "./store";
+import { BrowserRouter, Route } from "react-router-dom";
 class App extends Component {
   state = {
     listingsRings: data.listingsRings,
     listingsNecklace: data.listingsNecklace,
     cart: [],
-    activeScreen: "listings",
+    isAuthenticated: false,
+    cartButton: false,
   };
-  constructor() {
-    super();
-  }
-
+  // constructor() {
+  //   super();
+  // }
+  onLoggedin = () => {
+    this.setState({ isAuthenticated: true });
+  };
   addToCart = (list) => {
     let listings;
     if (list.type === "rings") {
@@ -59,11 +60,23 @@ class App extends Component {
       <>
         <BrowserRouter>
           <div>
-            <Navbar onClickCart={this.clickCart} />
+            <Navbar
+              onClickCart={this.clickCart}
+              isAuth={this.state.isAuthenticated}
+            />
             <hr />
 
             <main className="container">
-              <Route path="/" exact={true} render={() => <Login />} />
+              <Route
+                path="/"
+                exact={true}
+                render={() => (
+                  <Login
+                    isAuth={this.onLoggedin}
+                    isAuthenticated={this.state.isAuthenticated}
+                  />
+                )}
+              />
               <Route path="/register" exact render={() => <Register />} />
               <Route
                 path="/listings"

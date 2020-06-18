@@ -3,7 +3,14 @@ import { Button, Form, Container, Row } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 
 class Register extends Component {
-  state = {};
+  componentDidMount() {
+    // If logged in and user navigates to Register page, should redirect them to dashboard
+    // if (this.props.auth.isAuthenticated) {
+    //this.props.history.push("/listings");
+    //}
+    // save it to the state
+  }
+  //state = {};
   constructor() {
     super();
     this.state = {
@@ -13,6 +20,14 @@ class Register extends Component {
       password2: "",
       errors: {},
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors,
+      });
+    }
   }
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });

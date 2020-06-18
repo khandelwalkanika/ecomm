@@ -1,20 +1,33 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Button, Form, Container, Row } from "react-bootstrap";
 
 class LoginPage extends Component {
-  componentDidMount() {
-    // send HTTP request
-    // save it to the state
-  }
-  state = {};
   constructor() {
     super();
     this.state = {
       email: "",
       password: "",
       errors: {},
+      isAuthenticated: false,
     };
+  }
+
+  // componentDidMount() {
+  //   if (this.state.isAuthenticated) {
+  //     console.log("State kya h yahan--->".this.state.isAuthenticated);
+  //     this.props.history.push("/listings"); // push user to dashboard when they login
+  //   }
+  // }
+  componentWillReceiveProps(nextProps) {
+    // if (this.state.isAuthenticated) {
+    //   this.props.history.push("/listings"); // push user to dashboard when they login
+    // }
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors,
+      });
+    }
   }
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -37,15 +50,23 @@ class LoginPage extends Component {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
+        this.setState({ isAuthenticated: response.success });
+        const onSuccessLogin = () => {
+          this.props.isAuth();
+        };
+        if (response.success) {
+          onSuccessLogin();
+          this.props.history.push("/listings");
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-    const userData = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-    console.log("User Data : ", userData);
+    // const userData = {
+    //   email: this.state.email,
+    //   password: this.state.password,
+    // };
+    // console.log("User Data : ", userData);
   };
 
   render() {
@@ -102,4 +123,4 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);
