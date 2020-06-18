@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Header/navbar";
 import Listing from "./components/Product/listing";
-import Login from "./components/Login/login";
+import Login from "./components/Auth/login";
+import Register from "./components/Auth/register";
 import data from "./components/data.json";
 import Cart from "./components/Cart/cart";
 import { BrowserRouter, Route, Link } from "react-router-dom";

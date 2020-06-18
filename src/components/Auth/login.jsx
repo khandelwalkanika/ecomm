@@ -3,6 +3,26 @@ import { Button, Form, Container, Row } from "react-bootstrap";
 
 class LoginPage extends Component {
   state = {};
+  constructor() {
+    super();
+    this.state = {
+      email: "",
+      password: "",
+      errors: {},
+    };
+  }
+  onChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
+  onSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    console.log("User Data : ", userData);
+  };
+
   render() {
     return (
       <>
@@ -16,7 +36,6 @@ class LoginPage extends Component {
                   We'll never share your email with anyone else.
                 </Form.Text>
               </Form.Group>
-
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
@@ -24,12 +43,12 @@ class LoginPage extends Component {
               <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button variant="primary" className="r" type="submit">
                 Login
-              </Button>
+              </Button>{" "}
               <Button variant="primary" type="submit">
                 Register
-              </Button>
+              </Button>{" "}
             </Form>
           </Row>
         </Container>
