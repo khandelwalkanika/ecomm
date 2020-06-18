@@ -9,7 +9,6 @@ class LoginPage extends Component {
       email: "",
       password: "",
       errors: {},
-      isAuthenticated: false,
     };
   }
 
@@ -50,12 +49,8 @@ class LoginPage extends Component {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
-        this.setState({ isAuthenticated: response.success });
-        const onSuccessLogin = () => {
-          this.props.isAuth();
-        };
         if (response.success) {
-          onSuccessLogin();
+          this.props.isAuth();
           this.props.history.push("/listings");
         }
       })

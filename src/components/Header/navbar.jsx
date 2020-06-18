@@ -21,7 +21,7 @@ class HeaderNav extends Component {
             }}
           >
             Cart
-          </Button>{" "}
+          </Button>
         </Container>
       </Navbar>
     );

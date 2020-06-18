@@ -6,14 +6,16 @@ import Login from "./components/Auth/login";
 import Register from "./components/Auth/register";
 import data from "./components/data.json";
 import Cart from "./components/Cart/cart";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
+// import { AuthContext } from "./context/auth";
+
 class App extends Component {
   state = {
     listingsRings: data.listingsRings,
     listingsNecklace: data.listingsNecklace,
     cart: [],
     isAuthenticated: false,
-    cartButton: false,
   };
   // constructor() {
   //   super();
@@ -58,51 +60,37 @@ class App extends Component {
   render() {
     return (
       <>
-        <BrowserRouter>
-          <div>
-            <Navbar
-              onClickCart={this.clickCart}
-              isAuth={this.state.isAuthenticated}
-            />
-            <hr />
-
-            <main className="container">
-              <Route
-                path="/"
-                exact={true}
-                render={() => (
-                  <Login
-                    isAuth={this.onLoggedin}
-                    isAuthenticated={this.state.isAuthenticated}
-                  />
-                )}
-              />
-              <Route path="/register" exact render={() => <Register />} />
-              <Route
-                path="/listings"
-                exact={true}
-                render={() => (
-                  <Listing
-                    onAdding={this.addToCart}
-                    rings={this.state.listingsRings}
-                    necklace={this.state.listingsNecklace}
-                  />
-                )}
-              />
-
-              <Route
-                path="/cart"
-                exact
-                render={() => (
-                  <Cart
-                    cartData={this.state.cart}
-                    onDelete={this.deleteCartItem}
-                  />
-                )}
-              />
-            </main>
-          </div>
-        </BrowserRouter>
+        {/* <AuthContext.Provider value={false}> */}
+        <Router>
+          <Navbar
+            onClickCart={this.clickCart}
+            isAuth={this.state.isAuthenticated}
+          />
+          <hr />
+          <Route
+            path="/"
+            exact={true}
+            // isAuth=
+            render={() => <Login isAuth={this.onLoggedin} />}
+          />
+          <Route path="/register" exact render={() => <Register />} />
+          <PrivateRoute
+            path="/listings"
+            isAuthenticated={this.state.isAuthenticated}
+            onAdding={this.addToCart}
+            rings={this.state.listingsRings}
+            necklace={this.state.listingsNecklace}
+            component={Listing}
+          />
+          <Route
+            path="/cart"
+            exact
+            render={() => (
+              <Cart cartData={this.state.cart} onDelete={this.deleteCartItem} />
+            )}
+          />
+        </Router>
+        {/* </AuthContext.Provider> */}
       </>
     );
   }
