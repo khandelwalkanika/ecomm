@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Button, Card } from "react-bootstrap";
-import history from "../history";
+import { Button } from "react-bootstrap";
+//import history from "../history";
 // import { useHistory } from "react-router-dom";
 
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 class Cart extends Component {
   componentDidUpdate() {
     console.log("--------<>", this.props);
@@ -119,8 +119,8 @@ function getTotalPrice(cartData) {
   return totalPrice;
 }
 
-function deleteItem(cartData1) {
-  console.log("--kkk---->", cartData1);
-  const cartData = cartData1.filter((c) => c.id !== cartData1);
-  //this.props.cartData = { cartData };
-}
+// function deleteItem(cartData1) {
+//   console.log("--kkk---->", cartData1);
+//   const cartData = cartData1.filter((c) => c.id !== cartData1);
+//   //this.props.cartData = { cartData };
+// }

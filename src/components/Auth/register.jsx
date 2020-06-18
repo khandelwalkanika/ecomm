@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, Container, Row } from "react-bootstrap";
+import { Link, withRouter } from "react-router-dom";
 
 class Register extends Component {
   state = {};
@@ -14,7 +15,7 @@ class Register extends Component {
     };
   }
   onChange = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   };
   onSubmit = (e) => {
     e.preventDefault(); // prevents the page load on click on submit
@@ -32,17 +33,19 @@ class Register extends Component {
       <>
         <Container>
           <Row xs={1} md={2}>
+            <Link to="/" className="btn-flat waves-effect">
+              <i className="material-icons left"></i> Back to home
+            </Link>
             <h4>Register</h4>
             <Form noValidate onSubmit={this.onSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter email"
+                  placeholder="Enter Your Name"
                   onChange={this.onChange}
                   value={this.state.name}
-                  id="name"
-                  type="text"
+                  name="name"
                 />
               </Form.Group>
               <Form.Group controlId="formBasicEmail">
@@ -52,7 +55,7 @@ class Register extends Component {
                   placeholder="Enter email"
                   onChange={this.onChange}
                   value={this.state.email}
-                  id="email"
+                  name="email"
                 />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
@@ -62,7 +65,7 @@ class Register extends Component {
                   placeholder="Password"
                   onChange={this.onChange}
                   value={this.state.password}
-                  id="password"
+                  name="password"
                 />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
@@ -72,14 +75,11 @@ class Register extends Component {
                   placeholder="Password"
                   onChange={this.onChange}
                   value={this.state.password2}
-                  id="password2"
+                  name="password2"
                 />
               </Form.Group>
               <Button variant="primary" className="r" type="submit">
-                Signup
-              </Button>{" "}
-              <Button variant="primary" type="submit">
-                Register
+                Sign-up
               </Button>{" "}
             </Form>
           </Row>
@@ -89,4 +89,11 @@ class Register extends Component {
   }
 }
 
-export default Register;
+//This allows us to call this.props.auth or this.props.errors within our Register component.
+// const mapStateToProps = (state) => ({
+//   auth: state.auth,
+//   errors: state.errors,
+// });
+
+export default withRouter(Register);
+//export default Register;

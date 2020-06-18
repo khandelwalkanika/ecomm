@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import history from "../history";
-import { Link, withRouter } from "react-router-dom";
+import React from "react";
+//import history from "../history";
+import { withRouter } from "react-router-dom";
 import { Button, Container, Navbar } from "react-bootstrap";
 
 const HeaderNav = (props) => {

@@ -7,7 +7,8 @@ import Register from "./components/Auth/register";
 import data from "./components/data.json";
 import Cart from "./components/Cart/cart";
 import { BrowserRouter, Route, Link } from "react-router-dom";
-
+//import { Provider } from "react-redux";
+import store from "./store";
 class App extends Component {
   state = {
     listingsRings: data.listingsRings,
@@ -63,7 +64,7 @@ class App extends Component {
 
             <main className="container">
               <Route path="/" exact={true} render={() => <Login />} />
-
+              <Route path="/register" exact render={() => <Register />} />
               <Route
                 path="/listings"
                 exact={true}
