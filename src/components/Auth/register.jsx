@@ -19,6 +19,26 @@ class Register extends Component {
   };
   onSubmit = (e) => {
     e.preventDefault(); // prevents the page load on click on submit
+    fetch("http://localhost:5000/api/users/register", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
+        password2: this.state.password2,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     const newUser = {
       name: this.state.name,
       email: this.state.email,

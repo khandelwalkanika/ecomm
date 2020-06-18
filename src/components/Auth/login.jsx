@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { Button, Form, Container, Row } from "react-bootstrap";
 
 class LoginPage extends Component {
+  componentDidMount() {
+    // send HTTP request
+    // save it to the state
+  }
   state = {};
   constructor() {
     super();
@@ -16,7 +20,27 @@ class LoginPage extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   onSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // prevents the page load on click on submit
+
+    // creates entity
+    fetch("http://localhost:5000/api/users/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     const userData = {
       email: this.state.email,
       password: this.state.password,
