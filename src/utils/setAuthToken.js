@@ -9,3 +9,5 @@ const setAuthToken = (token) => {
   }
 };
 export default setAuthToken;
+
+//We will use this to set and delete the Authorization header for our axios requests depending on whether a user is logged in or not
