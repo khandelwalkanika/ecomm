@@ -6,6 +6,7 @@ import Login from "./components/Auth/login";
 import Register from "./components/Auth/register";
 import data from "./components/data.json";
 import Cart from "./components/Cart/cart";
+import Checkout from "./components/Checkout/checkout";
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -110,18 +111,15 @@ class App extends Component {
                 necklace={this.state.listingsNecklace}
                 component={Listing}
               />
+              <PrivateRoute
+                path="/cart"
+                exact
+                component={Cart}
+                cartData={this.state.cart}
+                onDelete={this.deleteCartItem}
+              />
+              <PrivateRoute exact path="/checkout" component={Checkout} />
             </Switch>
-
-            <Route
-              path="/cart"
-              exact
-              render={() => (
-                <Cart
-                  cartData={this.state.cart}
-                  onDelete={this.deleteCartItem}
-                />
-              )}
-            />
           </Router>
         </Provider>
       </>

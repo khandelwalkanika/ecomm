@@ -89,10 +89,10 @@ class Cart extends Component {
             </Col>
           </Row>
           <Row>
-            <Col sm>
-              <Button variant="outline-success">
-                Total Price :{getTotalPrice(this.props.cartData)}
-              </Button>{" "}
+            <Col>
+              <h4>Total Price :{getTotalPrice(this.props.cartData)}</h4>
+            </Col>
+            <Col md="auto">
               <Button
                 variant="outline-primary"
                 onClick={() => {
@@ -100,63 +100,17 @@ class Cart extends Component {
                 }}
               >
                 Continue Shopping
-              </Button>{" "}
-            </Col>{" "}
-          </Row>
-
-          <Row>
-            <Col sm={10}>
-              <Form>
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
-                  </Form.Group>
-                </Form.Row>
-
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control placeholder="1234 Main St" />
-                </Form.Group>
-
-                <Form.Group controlId="formGridAddress2">
-                  <Form.Label>Address 2</Form.Label>
-                  <Form.Control placeholder="Apartment, studio, or floor" />
-                </Form.Group>
-
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridCity">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control />
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridState">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control as="select" value="Choose...">
-                      <option>Choose...</option>
-                      <option>...</option>
-                    </Form.Control>
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridZip">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control />
-                  </Form.Group>
-                </Form.Row>
-
-                <Form.Group id="formGridCheckbox">
-                  <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
-              </Form>
+              </Button>
+            </Col>
+            <Col xs lg="2">
+              <Button
+                variant="outline-dark"
+                onClick={() => {
+                  this.props.history.push("/checkout");
+                }}
+              >
+                Checkout
+              </Button>
             </Col>
           </Row>
         </Container>
@@ -165,7 +119,6 @@ class Cart extends Component {
   }
 }
 
-//export default withRouter(Cart);
 Cart.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
