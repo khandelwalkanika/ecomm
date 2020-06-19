@@ -19,23 +19,25 @@ class HeaderNav extends Component {
       <Navbar expand="lg" variant="light" bg="light">
         <Container>
           <Navbar.Brand href="#">Net-Jewels-Price</Navbar.Brand>
-          <Button
-            hidden={this.props.auth.isAuthenticated ? "" : "hidden"}
-            variant="outline-success"
-            onClick={() => {
-              this.props.onClickCart(this.props);
-              this.props.history.push("/cart");
-            }}
-          >
-            Cart
-          </Button>{" "}
-          <Button
-            hidden={this.props.auth.isAuthenticated ? "" : "hidden"}
-            variant="outline-danger"
-            onClick={this.onLogoutClick}
-          >
-            Logout
-          </Button>
+          <div className="col m12" style={{ paddingLeft: "790.250px" }}>
+            <Button
+              hidden={this.props.auth.isAuthenticated ? "" : "hidden"}
+              variant="outline-success"
+              onClick={() => {
+                this.props.onClickCart(this.props);
+                this.props.history.push("/cart");
+              }}
+            >
+              Cart
+            </Button>{" "}
+            <Button
+              variant="outline-danger"
+              hidden={this.props.auth.isAuthenticated ? "" : "hidden"}
+              onClick={this.onLogoutClick}
+            >
+              Logout
+            </Button>{" "}
+          </div>
         </Container>
       </Navbar>
     );
