@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-//import history from "../history";
-// import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
 import { withRouter } from "react-router-dom";
 class Cart extends Component {
@@ -109,7 +110,15 @@ class Cart extends Component {
   }
 }
 
-export default withRouter(Cart);
+//export default withRouter(Cart);
+Cart.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { logoutUser })(withRouter(Cart));
 
 function getTotalPrice(cartData) {
   let totalPrice = 0;

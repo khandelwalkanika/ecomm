@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import "./listing.css";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 import { Button, Card } from "react-bootstrap";
 //import Lists from "./lists";
 class Listing extends Component {
   render() {
+    //const { user } = this.props.auth;
     return (
       <div>
         <div className="div-style">
@@ -57,4 +61,11 @@ class Listing extends Component {
   }
 }
 
-export default Listing;
+Listing.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { logoutUser })(Listing);
