@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import "./listing.css";
+import { Button } from "react-bootstrap";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+
+import { withRouter } from "react-router-dom";
 class Cart extends Component {
   componentDidUpdate() {
     console.log("--------<>", this.props);
@@ -9,17 +14,19 @@ class Cart extends Component {
     totalPrice: 0,
     cartData: [],
   };
+
   render() {
     return (
       <div>
         <div>
-          <button
-            className="btn btn-primary"
-            style={{ float: "right" }}
-            onClick={() => this.props.showListings()}
+          <Button
+            variant="primary"
+            onClick={() => {
+              this.props.history.push("/listings");
+            }}
           >
             Continue Shopping
-          </button>
+          </Button>
         </div>
 
         <span>You have {this.props.cartData.length} items</span>
@@ -63,7 +70,7 @@ class Cart extends Component {
                     this.props.onDelete(list.id, list.type, this.props.cartData)
                   }
                   type="button"
-                  class="btn btn-danger"
+                  className="btn btn-danger"
                 >
                   Delete
                 </button>
@@ -76,7 +83,7 @@ class Cart extends Component {
         <hr />
         <div>
           <span className="badge badge-pill badge-light">
-            <button type="button" class="btn btn-outline-success">
+            <button type="button" className="btn btn-outline-success">
               Total Price :{getTotalPrice(this.props.cartData)}
             </button>
           </span>
@@ -103,7 +110,15 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+//export default withRouter(Cart);
+Cart.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { logoutUser })(withRouter(Cart));
 
 function getTotalPrice(cartData) {
   let totalPrice = 0;
@@ -113,8 +128,8 @@ function getTotalPrice(cartData) {
   return totalPrice;
 }
 
-function deleteItem(cartData1) {
-  console.log("--kkk---->", cartData1);
-  const cartData = cartData1.filter((c) => c.id !== cartData1);
-  //this.props.cartData = { cartData };
-}
+// function deleteItem(cartData1) {
+//   console.log("--kkk---->", cartData1);
+//   const cartData = cartData1.filter((c) => c.id !== cartData1);
+//   //this.props.cartData = { cartData };
+// }

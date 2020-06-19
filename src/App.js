@@ -1,21 +1,54 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import Navbar from "./components/navbar";
-import Listing from "./components/listing";
+import Navbar from "./components/Header/navbar";
+import Listing from "./components/Product/listing";
+import Login from "./components/Auth/login";
+import Register from "./components/Auth/register";
 import data from "./components/data.json";
-import Cart from "./components/cart";
+import Cart from "./components/Cart/cart";
+
+import PrivateRoute from "./components/private-route/PrivateRoute";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+//import PrivateRoute from "./PrivateRoute";
+// import { AuthContext } from "./context/auth";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { Provider } from "react-redux";
+import store from "./store";
+
+// Check for token to keep user logged in
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(token);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+  // Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Redirect to login
+    window.location.href = "./login";
+  }
+}
+
 class App extends Component {
   state = {
     listingsRings: data.listingsRings,
     listingsNecklace: data.listingsNecklace,
     cart: [],
-    activeScreen: "listings",
+    isAuthenticated: false,
   };
-  constructor() {
-    super();
-  }
-
+  // constructor() {
+  //   super();
+  // }
+  onLoggedin = () => {
+    this.setState({ isAuthenticated: true });
+  };
   addToCart = (list) => {
     let listings;
     if (list.type === "rings") {
@@ -39,17 +72,11 @@ class App extends Component {
   };
 
   clickCart = () => {
-    this.setState({ activeScreen: "cart" });
-  };
-  onShowingLists = () => {
-    this.setState({ activeScreen: "listings" });
+    // this.props.history.push(path);
   };
 
   deleteCartItem = (cartDataId, cartDataType, cartData) => {
-    /** listingsRings: (this.state.listingsRings[cartDataId].numOfItems = 0),
-      listingsNecklace: this.state.listingsNecklace.filter((item) => {
-        return item.type !== cartDataType || item.id !== cartDataId;
-      }), */
+    /** listingsRings: (this.state.listingsRings[cartDataId].numOfItems = 0), */
     this.setState({
       cart: cartData.filter((item) => {
         return !(item.type === cartDataType && item.id === cartDataId);
@@ -59,26 +86,44 @@ class App extends Component {
   render() {
     return (
       <>
-        <Navbar onClickCart={this.clickCart} />
-        <hr />
-        <main className="container">
-          <div hidden={this.state.activeScreen !== "listings"}>
-            <Listing
-              // onReset={this.handleReset}
-              // onDelete={this.handleDelete}
-              onAdding={this.addToCart}
-              rings={this.state.listingsRings}
-              necklace={this.state.listingsNecklace}
+        <Provider store={store}>
+          <Router>
+            <Navbar
+              onClickCart={this.clickCart}
+              isAuth={this.state.isAuthenticated}
             />
-          </div>
-          <div hidden={this.state.activeScreen !== "cart"}>
-            <Cart
-              cartData={this.state.cart}
-              onDelete={this.deleteCartItem}
-              showListings={this.onShowingLists}
+            <hr />
+            <Route
+              path="/"
+              exact={true}
+              // isAuth=
+              render={() => <Login isAuth={this.onLoggedin} />}
             />
-          </div>
-        </main>
+            <Route path="/register" exact render={() => <Register />} />
+            <Switch>
+              <PrivateRoute
+                exact
+                path="/listings"
+                isAuthenticated={this.state.isAuthenticated}
+                onAdding={this.addToCart}
+                rings={this.state.listingsRings}
+                necklace={this.state.listingsNecklace}
+                component={Listing}
+              />
+            </Switch>
+
+            <Route
+              path="/cart"
+              exact
+              render={() => (
+                <Cart
+                  cartData={this.state.cart}
+                  onDelete={this.deleteCartItem}
+                />
+              )}
+            />
+          </Router>
+        </Provider>
       </>
     );
   }
