@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Card,
-  ListGroup,
-  Form,
-  Col,
-  Container,
-  Row,
-} from "react-bootstrap";
+import { Button, Card, ListGroup, Col, Container, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";

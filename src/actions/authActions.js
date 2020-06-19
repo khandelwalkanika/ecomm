@@ -14,6 +14,18 @@ export const registerUser = (userData, history) => (dispatch) => {
       })
     );
 };
+//Placing Order- CHECKOUT
+export const placeOrder = (userData, history) => (dispatch) => {
+  axios
+    .post("http://localhost:5000/api/users/checkout", userData)
+    .then((res) => history.push("/listings")) // re-direct to login on successful register
+    .catch((err) =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
 // Login - get user token
 export const loginUser = (userData) => (dispatch) => {
   axios
