@@ -47,14 +47,16 @@ class LoginPage extends Component {
     const { errors } = this.state;
     return (
       <>
-        <div className="col s12" style={{ paddingLeft: "70.250px" }}>
-          <h4>
-            <b>Login</b> below
-          </h4>
-        </div>
         <Container>
           <Row>
-            <Col md={{ span: 3, offset: 3 }}>
+            <Col md={{ span: 4, offset: 3 }}>
+              <h4>
+                <b>Login</b> below
+              </h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={{ span: 4, offset: 3 }}>
               <Form onSubmit={this.onSubmit}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>

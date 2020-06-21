@@ -77,11 +77,43 @@ class App extends Component {
   };
 
   deleteCartItem = (cartDataId, cartDataType, cartData) => {
-    /** listingsRings: (this.state.listingsRings[cartDataId].numOfItems = 0), */
+    const newListsRings = [...this.state.listingsRings];
+    const newListsNecklace = [...this.state.listingsNecklace];
+
+    const deletedItemInfo = cartData.filter((item) => {
+      return item.type === cartDataType && item.id === cartDataId;
+    });
+    console.log("deletedItemInfo ", deletedItemInfo);
+    const indexRings = newListsRings.findIndex(
+      (item) => item.id === cartDataId
+    );
+    newListsRings[indexRings].numOfItems = 0;
+
+    const indexNecklace = newListsNecklace.findIndex(
+      (item) => item.id === cartDataId
+    );
+    newListsNecklace[indexNecklace].numOfItems = 0;
+
+    console.log(
+      "newListsRings==",
+      newListsRings,
+      "newnecklace===",
+      newListsNecklace
+    );
+    // console.log(
+    //   newLists[index].numOfItems,
+    //   "at index--",
+    //   index,
+    //   "---new lists >",
+    //   newLists
+    // );
+    // newLists[cartDataId].numOfItems = 0;
     this.setState({
       cart: cartData.filter((item) => {
         return !(item.type === cartDataType && item.id === cartDataId);
       }),
+      listingsRings: newListsRings,
+      listingsNecklace: newListsNecklace,
     });
   };
   render() {

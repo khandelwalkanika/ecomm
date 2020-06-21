@@ -39,7 +39,7 @@ class Listing extends Component {
             <Card style={{ width: "18rem" }} key={list.id}>
               <Card.Img variant="top" src={list.imgPath} />
               <Card.Body>
-                <Card.Title> Ring {list.id}</Card.Title>
+                <Card.Title> Necklace {list.id}</Card.Title>
                 <Card.Text>Price: ${list.price}</Card.Text>
                 <Button
                   variant="primary"
