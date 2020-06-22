@@ -14,13 +14,19 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import { AuthContext } from "./context/auth";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import {
+  setCurrentUser,
+  logoutUser,
+  storeProductInState,
+} from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
+  console.log("STORE DISPATCH:", localStorage.allProducts);
+  store.dispatch(storeProductInState());
 
   const token = localStorage.jwtToken;
   setAuthToken(token);
