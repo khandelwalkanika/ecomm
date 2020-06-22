@@ -13,6 +13,8 @@ class Checkout extends Component {
     this.state = {
       email: "",
       address: "",
+      orderNumber: "",
+      totalPrice: "",
       address2: "",
       city: "",
       state: "",
@@ -29,6 +31,8 @@ class Checkout extends Component {
     e.preventDefault();
     const userInfo = {
       email: this.state.email,
+      orderNumber: "101",
+      totalPrice: "1000",
       address: this.state.address,
       address2: this.state.address2,
       city: this.state.city,

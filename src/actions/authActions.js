@@ -1,7 +1,7 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING, SET_LISTS } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 // Register User
 export const registerUser = function (userData, history) {
   return function (dispatch) {
@@ -32,28 +32,28 @@ export const placeOrder = (userData, history) => (dispatch) => {
     );
 };
 
-export const getProducts = () => (dispatch) => {
-  //fetch('/users').then(res => res.json())
-  axios
-    .get("http://localhost:5000/api/users/getProducts")
-    .then((res) => {
-      console.log("All products---->", res.data);
-      dispatch(storeProductInState(res.data.products));
-    }) // re-direct to login on successful register
-    .catch((err) =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
-};
-//get products
-export const storeProductInState = (data) => {
-  return {
-    type: SET_LISTS,
-    payload: data,
-  };
-};
+// export const getProducts = () => (dispatch) => {
+//   //fetch('/users').then(res => res.json())
+//   axios
+//     .get("http://localhost:5000/api/users/getProducts")
+//     .then((res) => {
+//       console.log("All products---->", res.data);
+//       dispatch(storeProductInState(res.data.products));
+//     }) // re-direct to login on successful register
+//     .catch((err) =>
+//       dispatch({
+//         type: GET_ERRORS,
+//         payload: err.response.data,
+//       })
+//     );
+// };
+// //get products
+// export const storeProductInState = (data) => {
+//   return {
+//     type: SET_LISTS,
+//     payload: data,
+//   };
+// };
 // Login - get user token
 export const loginUser = (userData) => (dispatch) => {
   axios
