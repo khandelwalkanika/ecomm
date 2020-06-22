@@ -12,3 +12,7 @@
 .image-size {
   height: 99px;
 }
+
+.listing-images {
+  height: 250px !important;
+}

@@ -5,6 +5,7 @@
       "price": 500,
       "numOfItems": 0,
       "type": "rings",
+      "productName": "Heart Diamond ring",
       "imgPath": "https://images-na.ssl-images-amazon.com/images/I/818d09FYGWL._UL1500_.jpg"
     },
     {
@@ -12,6 +13,7 @@
       "price": 300,
       "numOfItems": 0,
       "type": "rings",
+      "productName": "Platinum One ring",
       "imgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRdymVuWv_VIweNBAwlMycSsIgdmNTSEPFFcseFUyWjfgVD94g7&usqp=CAU"
     },
     {
@@ -19,6 +21,7 @@
       "price": 200,
       "numOfItems": 0,
       "type": "rings",
+      "productName": "Miracle 3-Plate Ring",
       "imgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTOXoZ87QMq1M4FxolF_7tPuHsb2eVlfUKJFIBqxK0Aws6uEBZe&usqp=CAU"
     }
   ],
@@ -27,6 +30,7 @@
       "id": 1,
       "price": 100,
       "numOfItems": 0,
+      "productName": "V Neck Solitaire",
       "type": "necklace",
       "imgPath": "https://cdn.augrav.com/online/jewels/2015/09/The-Princess-Diamond-Necklace-Set-4.jpg"
     },
@@ -34,6 +38,7 @@
       "id": 2,
       "price": 300,
       "numOfItems": 0,
+      "productName": "Single Line Illusion",
       "type": "necklace",
       "imgPath": "https://cdn.augrav.com/online/jewels/2015/09/The-Ultimate-Diamond-Necklace-Set-4.jpg"
     },
@@ -41,6 +46,7 @@
       "id": 3,
       "price": 500,
       "numOfItems": 0,
+      "productName": "Designed Solitaire",
       "type": "necklace",
       "imgPath": "https://www.nahoku.com/product/image/medium/19456_0.jpg"
     }

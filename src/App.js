@@ -98,26 +98,30 @@ class App extends Component {
       newListsNecklace[indexNecklace].numOfItems = 0;
     }
 
-    console.log(
-      "newListsRings==",
-      newListsRings,
-      "newnecklace===",
-      newListsNecklace
-    );
-    // console.log(
-    //   newLists[index].numOfItems,
-    //   "at index--",
-    //   index,
-    //   "---new lists >",
-    //   newLists
-    // );
-    // newLists[cartDataId].numOfItems = 0;
     this.setState({
       cart: cartData.filter((item) => {
         return !(item.type === cartDataType && item.id === cartDataId);
       }),
       listingsRings: newListsRings,
       listingsNecklace: newListsNecklace,
+    });
+  };
+  deleteAllCartItem = () => {
+    //back to original state
+
+    const newListsRings = [...this.state.listingsRings];
+    const newListsNecklace = [...this.state.listingsNecklace];
+    console.log("Do i even get called?");
+    for (let i in newListsRings) {
+      newListsRings[i].numOfItems = 0;
+    }
+    for (let i in newListsNecklace) {
+      newListsNecklace[i].numOfItems = 0;
+    }
+    this.setState({
+      listingsRings: newListsRings,
+      listingsNecklace: newListsNecklace,
+      cart: [],
     });
   };
   render() {
@@ -129,7 +133,7 @@ class App extends Component {
               onClickCart={this.clickCart}
               isAuth={this.state.isAuthenticated}
             />
-            <hr />
+
             <Route
               path="/"
               exact={true}
@@ -153,6 +157,7 @@ class App extends Component {
                 component={Cart}
                 cartData={this.state.cart}
                 onDelete={this.deleteCartItem}
+                onCheckoutDelete={this.deleteAllCartItem}
               />
               <PrivateRoute exact path="/checkout" component={Checkout} />
             </Switch>

@@ -40,8 +40,7 @@ class Cart extends Component {
                       </div>
                       <div className="idiv-size">
                         <span className="badge m-2 badge-warning">
-                          {" "}
-                          {list.type} {list.id}{" "}
+                          {list.productName}{" "}
                         </span>
 
                         <span className="badge badge-pill badge-light">
@@ -80,11 +79,23 @@ class Cart extends Component {
               </Card>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <h4>Total Price :{getTotalPrice(this.props.cartData)}</h4>
-            </Col>
-            <Col md="auto">
+
+          <Card style={{ width: "40rem" }} className="text-center">
+            <Card.Body>
+              <Card.Title>
+                Total amount : $ {getTotalPrice(this.props.cartData)}
+              </Card.Title>
+            </Card.Body>
+            <Card.Footer className="text-muted">
+              <Button
+                variant="outline-dark"
+                onClick={() => {
+                  this.props.history.push("/checkout");
+                  this.props.onCheckoutDelete();
+                }}
+              >
+                Checkout
+              </Button>{" "}
               <Button
                 variant="outline-primary"
                 onClick={() => {
@@ -93,18 +104,8 @@ class Cart extends Component {
               >
                 Continue Shopping
               </Button>
-            </Col>
-            <Col xs lg="2">
-              <Button
-                variant="outline-dark"
-                onClick={() => {
-                  this.props.history.push("/checkout");
-                }}
-              >
-                Checkout
-              </Button>
-            </Col>
-          </Row>
+            </Card.Footer>
+          </Card>
         </Container>
       </>
     );

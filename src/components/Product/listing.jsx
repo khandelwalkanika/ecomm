@@ -13,60 +13,87 @@ class Listing extends Component {
 
   render() {
     //const { user } = this.props.auth;
+    //for background color of the card bg="dark"
     return (
       <>
-        <Table responsive>
-          <tbody>
-            <tr>
-              {this.props.rings.map((list, i) => (
-                <td>
-                  <Card border="dark" style={{ width: "16rem" }} key={list.id}>
-                    <Image thumbnail src={list.imgPath} />
-                    <Card.Body>
-                      <Card.Title> Ring {list.id}</Card.Title>
-                      <Card.Text>Price: ${list.price}</Card.Text>
-                      <Button
-                        variant="primary"
-                        onClick={() => this.props.onAdding(list)}
-                      >
-                        Add to Cart
-                      </Button>
-                      <span className="badge badge-light">
-                        {list.numOfItems === 0
-                          ? " "
-                          : "x" + list.numOfItems + " in Cart"}
-                      </span>
-                    </Card.Body>
-                  </Card>
-                </td>
-              ))}
-            </tr>
-            <tr>
-              {this.props.necklace.map((list, i) => (
-                <td>
-                  <Card style={{ width: "16rem" }} border="dark" key={list.id}>
-                    <Image thumbnail src={list.imgPath} />
-                    <Card.Body>
-                      <Card.Title> Necklace {list.id}</Card.Title>
-                      <Card.Text>Price: ${list.price}</Card.Text>
-                      <Button
-                        variant="primary"
-                        onClick={() => this.props.onAdding(list)}
-                      >
-                        Add to Cart
-                      </Button>
-                      <span className="badge badge-light">
-                        {list.numOfItems === 0
-                          ? " "
-                          : "x" + list.numOfItems + " in Cart"}
-                      </span>
-                    </Card.Body>
-                  </Card>
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </Table>
+        <Card style={{ width: "70rem" }}>
+          <Card.Header>Rings...</Card.Header>
+          <Table responsive>
+            <tbody>
+              <tr>
+                {this.props.rings.map((list, i) => (
+                  <td>
+                    <Card
+                      border="dark"
+                      style={{ width: "16rem" }}
+                      key={list.id}
+                    >
+                      <Image
+                        className="listing-images"
+                        thumbnail
+                        src={list.imgPath}
+                      />
+                      <Card.Body>
+                        <Card.Title> {list.productName}</Card.Title>
+                        <Card.Text>Price: ${list.price}</Card.Text>
+                        <Button
+                          variant="primary"
+                          onClick={() => this.props.onAdding(list)}
+                        >
+                          Add to Cart
+                        </Button>
+                        <span className="badge badge-light">
+                          {list.numOfItems === 0
+                            ? " "
+                            : "x" + list.numOfItems + " in Cart"}
+                        </span>
+                      </Card.Body>
+                    </Card>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </Table>
+        </Card>
+        <Card style={{ width: "70rem" }}>
+          <Card.Header>Necklaces...</Card.Header>
+          <Table responsive>
+            <tbody>
+              <tr>
+                {this.props.necklace.map((list, i) => (
+                  <td>
+                    <Card
+                      style={{ width: "16rem" }}
+                      border="dark"
+                      key={list.id}
+                    >
+                      <Image
+                        className="listing-images"
+                        thumbnail
+                        src={list.imgPath}
+                      />
+                      <Card.Body>
+                        <Card.Title> {list.productName}</Card.Title>
+                        <Card.Text>Price: ${list.price}</Card.Text>
+                        <Button
+                          variant="primary"
+                          onClick={() => this.props.onAdding(list)}
+                        >
+                          Add to Cart
+                        </Button>
+                        <span className="badge badge-light">
+                          {list.numOfItems === 0
+                            ? " "
+                            : "x" + list.numOfItems + " in Cart"}
+                        </span>
+                      </Card.Body>
+                    </Card>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </Table>
+        </Card>
       </>
     );
   }
