@@ -16,14 +16,22 @@ class LoginPage extends Component {
     };
   }
   componentDidMount() {
-    // If logged in and user navigates to Login page, should redirect them to product listings
+    // If logged in and user navigates to Login page, should redirect them to product listings/admin dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/listings");
+      if (this.props.auth.userRole === "admin") {
+        this.props.history.push("/dashboard");
+      } else {
+        this.props.history.push("/listings");
+      }
     }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/listings"); // push user to listing page when they login
+      if (this.props.auth.userRole === "admin") {
+        this.props.history.push("/dashboard"); // if admin push to dashborad page
+      } else {
+        this.props.history.push("/listings"); // push user to listing page when they login
+      }
     }
     if (nextProps.errors) {
       this.setState({

@@ -16,6 +16,20 @@ export const registerUser = function (userData, history) {
       );
   };
 };
+
+export const uploadProduct = function (productData, history) {
+  return function (dispatch) {
+    return axios
+      .post("http://localhost:5000/api/users/uploadProducts", productData)
+      .then((res) => history.push("/productLists")) // re-direct to list page
+      .catch((err) =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data,
+        })
+      );
+  };
+};
 //Placing Order- CHECKOUT
 export const placeOrder = (userData, history) => (dispatch) => {
   axios

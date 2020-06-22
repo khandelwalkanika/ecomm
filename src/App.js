@@ -10,24 +10,16 @@ import Checkout from "./components/Checkout/checkout";
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-//import PrivateRoute from "./PrivateRoute";
-// import { AuthContext } from "./context/auth";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import {
-  setCurrentUser,
-  logoutUser,
-  storeProductInState,
-} from "./actions/authActions";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
-
+import AdminDashboard from "./components/Admin/dashboard";
+import ProductList from "./components/Admin/productList";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
-  console.log("STORE DISPATCH:", localStorage.allProducts);
-  store.dispatch(storeProductInState());
-
   const token = localStorage.jwtToken;
   setAuthToken(token);
   // Decode token and get user info and expired token
@@ -130,6 +122,7 @@ class App extends Component {
       cart: [],
     });
   };
+
   render() {
     return (
       <>
@@ -139,7 +132,8 @@ class App extends Component {
               onClickCart={this.clickCart}
               isAuth={this.state.isAuthenticated}
             />
-
+            <Route exact path="/dashboard" component={AdminDashboard} />
+            <Route exact path="/productLists" component={ProductList} />
             <Route
               path="/"
               exact={true}

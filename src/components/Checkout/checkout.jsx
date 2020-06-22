@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Col, Container, Row } from "react-bootstrap";
+import { Button, Form, Col, Container, Card } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
@@ -47,15 +47,18 @@ class Checkout extends Component {
     const { errors } = this.state;
     return (
       <>
+        <br />
         <Container>
-          <Row>
-            <Col sm={10}>
+          <Card style={{ width: "40rem" }}>
+            <Card.Body>
+              <Card.Title>Place your Order</Card.Title>
               <Form noValidate onSubmit={this.onSubmit}>
                 <Form.Row>
                   <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
                       type="email"
+                      required
                       placeholder="Enter email"
                       onChange={this.onChange}
                       value={this.state.email}
@@ -65,17 +68,6 @@ class Checkout extends Component {
                       })}
                     />
                   </Form.Group>
-
-                  {/* <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      onChange={this.onChange}
-                      value={this.state.password}
-                      name="password"
-                      placeholder="Password"
-                    />
-                  </Form.Group> */}
                 </Form.Row>
 
                 <Form.Group controlId="formGridAddress1">
@@ -83,6 +75,7 @@ class Checkout extends Component {
                   <Form.Control
                     type="text"
                     name="address"
+                    required
                     onChange={this.onChange}
                     value={this.state.address}
                     placeholder="1234 Main St"
@@ -139,8 +132,8 @@ class Checkout extends Component {
                   Checkout
                 </Button>
               </Form>
-            </Col>
-          </Row>
+            </Card.Body>
+          </Card>
         </Container>
       </>
     );
