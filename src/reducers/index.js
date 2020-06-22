@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 import authReducer from "./authReducers";
 import errorReducer from "./errorReducers";
+import productListingReducer from "./productListingReducers";
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
+  lists: productListingReducer,
 });
 
 /* Root reducer */

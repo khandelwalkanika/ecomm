@@ -21,9 +21,10 @@ import store from "./store";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
+
   const token = localStorage.jwtToken;
   setAuthToken(token);
-  // Decode token and get user info and exp
+  // Decode token and get user info and expired token
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
@@ -84,15 +85,18 @@ class App extends Component {
       return item.type === cartDataType && item.id === cartDataId;
     });
     console.log("deletedItemInfo ", deletedItemInfo);
-    const indexRings = newListsRings.findIndex(
-      (item) => item.id === cartDataId
-    );
-    newListsRings[indexRings].numOfItems = 0;
 
-    const indexNecklace = newListsNecklace.findIndex(
-      (item) => item.id === cartDataId
-    );
-    newListsNecklace[indexNecklace].numOfItems = 0;
+    if (cartDataType === "rings") {
+      const indexRings = newListsRings.findIndex(
+        (item) => item.id === cartDataId
+      );
+      newListsRings[indexRings].numOfItems = 0;
+    } else {
+      const indexNecklace = newListsNecklace.findIndex(
+        (item) => item.id === cartDataId
+      );
+      newListsNecklace[indexNecklace].numOfItems = 0;
+    }
 
     console.log(
       "newListsRings==",
