@@ -6,6 +6,7 @@ import Login from "./components/Auth/login";
 import Register from "./components/Auth/register";
 import data from "./components/data.json";
 import Cart from "./components/Cart/cart";
+import Checkout from "./components/Checkout/checkout";
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -20,9 +21,10 @@ import store from "./store";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
+
   const token = localStorage.jwtToken;
   setAuthToken(token);
-  // Decode token and get user info and exp
+  // Decode token and get user info and expired token
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
@@ -76,11 +78,50 @@ class App extends Component {
   };
 
   deleteCartItem = (cartDataId, cartDataType, cartData) => {
-    /** listingsRings: (this.state.listingsRings[cartDataId].numOfItems = 0), */
+    const newListsRings = [...this.state.listingsRings];
+    const newListsNecklace = [...this.state.listingsNecklace];
+
+    const deletedItemInfo = cartData.filter((item) => {
+      return item.type === cartDataType && item.id === cartDataId;
+    });
+    console.log("deletedItemInfo ", deletedItemInfo);
+
+    if (cartDataType === "rings") {
+      const indexRings = newListsRings.findIndex(
+        (item) => item.id === cartDataId
+      );
+      newListsRings[indexRings].numOfItems = 0;
+    } else {
+      const indexNecklace = newListsNecklace.findIndex(
+        (item) => item.id === cartDataId
+      );
+      newListsNecklace[indexNecklace].numOfItems = 0;
+    }
+
     this.setState({
       cart: cartData.filter((item) => {
         return !(item.type === cartDataType && item.id === cartDataId);
       }),
+      listingsRings: newListsRings,
+      listingsNecklace: newListsNecklace,
+    });
+  };
+  deleteAllCartItem = () => {
+    //back to original state
+
+    const newListsRings = [...this.state.listingsRings];
+    const newListsNecklace = [...this.state.listingsNecklace];
+    console.log("Do i even get called?");
+    for (let i in newListsRings) {
+      newListsRings[i].numOfItems = 0;
+    }
+    for (let i in newListsNecklace) {
+      newListsNecklace[i].numOfItems = 0;
+    }
+    this.setState({
+      listingsRings: newListsRings,
+      listingsNecklace: newListsNecklace,
+      cart: [],
     });
   };
   render() {
@@ -92,7 +133,7 @@ class App extends Component {
               onClickCart={this.clickCart}
               isAuth={this.state.isAuthenticated}
             />
-            <hr />
+
             <Route
               path="/"
               exact={true}
@@ -110,18 +151,16 @@ class App extends Component {
                 necklace={this.state.listingsNecklace}
                 component={Listing}
               />
+              <PrivateRoute
+                path="/cart"
+                exact
+                component={Cart}
+                cartData={this.state.cart}
+                onDelete={this.deleteCartItem}
+                onCheckoutDelete={this.deleteAllCartItem}
+              />
+              <PrivateRoute exact path="/checkout" component={Checkout} />
             </Switch>
-
-            <Route
-              path="/cart"
-              exact
-              render={() => (
-                <Cart
-                  cartData={this.state.cart}
-                  onDelete={this.deleteCartItem}
-                />
-              )}
-            />
           </Router>
         </Provider>
       </>

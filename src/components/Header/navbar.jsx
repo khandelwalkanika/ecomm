@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { Button, Container, Navbar } from "react-bootstrap";
+import { Button, Navbar, Nav } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
@@ -16,9 +16,10 @@ class HeaderNav extends Component {
   };
   render() {
     return (
-      <Navbar expand="lg" variant="light" bg="light">
-        <Container>
-          <Navbar.Brand href="#">Net-Jewels-Price</Navbar.Brand>
+      <>
+        <Navbar bg="light" variant="light">
+          <Navbar.Brand href="#home">Net-Jewels-Price</Navbar.Brand>
+          <Nav className="mr-auto"></Nav>
           <Button
             hidden={this.props.auth.isAuthenticated ? "" : "hidden"}
             variant="outline-success"
@@ -30,14 +31,14 @@ class HeaderNav extends Component {
             Cart
           </Button>{" "}
           <Button
-            hidden={this.props.auth.isAuthenticated ? "" : "hidden"}
             variant="outline-danger"
+            hidden={this.props.auth.isAuthenticated ? "" : "hidden"}
             onClick={this.onLogoutClick}
           >
             Logout
-          </Button>
-        </Container>
-      </Navbar>
+          </Button>{" "}
+        </Navbar>
+      </>
     );
   }
 }

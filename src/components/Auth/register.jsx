@@ -19,10 +19,10 @@ class Register extends Component {
     };
   }
   componentDidMount() {
-    // If logged in and user navigates to Register page, should redirect them to dashboard
-    // if (this.props.auth.isAuthenticated) {
-    //   this.props.history.push("/listings");
-    // }
+    // If logged in and user navigates to Register page, should redirect them to listings
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/listings");
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
