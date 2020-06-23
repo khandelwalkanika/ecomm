@@ -22,6 +22,7 @@ if (localStorage.jwtToken) {
   // Set auth token header auth
   const token = localStorage.jwtToken;
   setAuthToken(token);
+  //const userRole = localStorage.userRole;
   // Decode token and get user info and expired token
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
@@ -32,7 +33,7 @@ if (localStorage.jwtToken) {
     // Logout user
     store.dispatch(logoutUser());
     // Redirect to login
-    window.location.href = "./login";
+    window.location.href = "./";
   }
 }
 

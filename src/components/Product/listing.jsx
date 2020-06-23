@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import "./listing.css";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser, getProducts } from "../../actions/authActions";
 import { Button, Card, Table, Image } from "react-bootstrap";
 //import Lists from "./lists";
 class Listing extends Component {
-  componentDidMount() {
-    console.log("Im in listings didmount", this.props.getProducts());
-    this.props.getProducts();
-  }
+  // componentDidMount() {
+  //   console.log("Im in listings didmount", this.props.getProducts());
+  //   this.props.getProducts();
+  // }
 
   render() {
     //for background color of the card bg="dark"
@@ -99,12 +98,11 @@ class Listing extends Component {
 }
 
 Listing.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  getProducts: PropTypes.func.isRequired,
+  // getProducts: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
   auth: state.auth,
   lists: state.lists,
 });
-export default connect(mapStateToProps, { logoutUser, getProducts })(Listing);
+export default connect(mapStateToProps)(Listing);

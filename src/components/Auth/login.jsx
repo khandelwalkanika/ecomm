@@ -17,9 +17,10 @@ class LoginPage extends Component {
   }
   componentDidMount() {
     // If logged in and user navigates to Login page, should redirect them to product listings/admin dashboard
+    console.log("PROPSSS:", this.props);
     if (this.props.auth.isAuthenticated) {
-      if (this.props.auth.userRole === "admin") {
-        this.props.history.push("/dashboard");
+      if (localStorage.userRole === "admin") {
+        this.props.history.push("/productLists");
       } else {
         this.props.history.push("/listings");
       }
@@ -27,8 +28,8 @@ class LoginPage extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      if (this.props.auth.userRole === "admin") {
-        this.props.history.push("/dashboard"); // if admin push to dashborad page
+      if (localStorage.userRole === "admin") {
+        this.props.history.push("/productLists"); // if admin push to dashborad page
       } else {
         this.props.history.push("/listings"); // push user to listing page when they login
       }
@@ -36,6 +37,7 @@ class LoginPage extends Component {
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors,
+        userRole: nextProps.userRole,
       });
     }
   }
@@ -125,6 +127,7 @@ LoginPage.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
 };
+//This or use Selector both are conceptually same ,Allows you to extract data from the Redux store state.
 const mapStateToProps = (state) => ({
   auth: state.auth,
   errors: state.errors,

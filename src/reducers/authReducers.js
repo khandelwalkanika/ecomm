@@ -3,15 +3,18 @@ const isEmpty = require("is-empty");
 const initialState = {
   isAuthenticated: false,
   user: {},
+  userRole: null,
   loading: false,
 };
 export default function (state = initialState, action) {
+  console.log("authReducer:", action.payload);
   switch (action.type) {
     case SET_CURRENT_USER:
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload,
+        userRole: action.payload.role,
       };
     case USER_LOADING:
       return {

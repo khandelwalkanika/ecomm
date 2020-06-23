@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Button, Form, Row, Col, Card } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-// import PropTypes from "prop-types";
-// import { connect } from "react-redux";
-// import { uploadProduct } from "../../actions/authActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+import { uploadProduct } from "../../actions/productActions";
 class AdminDashboard extends Component {
   state = {};
   onChange = (e) => {
@@ -18,6 +19,7 @@ class AdminDashboard extends Component {
       productType: this.state.itemType,
       numOfItems: 0,
     };
+    console.log("new product info:", newProduct);
     this.props.uploadProduct(newProduct, this.props.history);
   };
   render() {
@@ -71,31 +73,31 @@ class AdminDashboard extends Component {
                   />
                 </Col>
               </Form.Group>
-              <fieldset>
-                <Form.Group as={Row}>
-                  <Form.Label as="legend" column sm={2}>
-                    Type
-                  </Form.Label>
-                  <Col sm={10}>
-                    <Form.Check
-                      type="radio"
-                      label="Rings"
-                      name="itemType"
-                      id="rings"
-                    />
-                    <Form.Check
-                      type="radio"
-                      label="Necklace"
-                      name="itemType"
-                      id="necklace"
-                    />
-                  </Col>
-                </Form.Group>
-              </fieldset>
+              <Form.Group as={Row} controlId="formHorizontalItemType">
+                <Form.Label column sm={3}>
+                  Type
+                </Form.Label>
+                <Col sm={8}>
+                  <Form.Control
+                    type="text"
+                    placeholder="whats the type???"
+                    onChange={this.onChange}
+                    value={this.state.itemType}
+                    name="itemType"
+                  />
+                </Col>
+              </Form.Group>
 
               <Form.Group as={Row}>
                 <Col sm={{ span: 10, offset: 2 }}>
-                  <Button type="submit">Save</Button>
+                  <Button type="submit">Save</Button>{" "}
+                  <Button
+                    onClick={() => {
+                      this.props.history.push("/productLists");
+                    }}
+                  >
+                    See Your List
+                  </Button>{" "}
                 </Col>
               </Form.Group>
             </Form>
@@ -106,4 +108,18 @@ class AdminDashboard extends Component {
   }
 }
 
-export default withRouter(AdminDashboard);
+AdminDashboard.propTypes = {
+  uploadProduct: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  productData: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  productData: state.productData,
+  auth: state.auth,
+  errors: state.errors,
+});
+export default connect(mapStateToProps, { uploadProduct, logoutUser })(
+  withRouter(AdminDashboard)
+);

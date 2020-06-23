@@ -2,8 +2,10 @@ import { combineReducers } from "redux";
 import authReducer from "./authReducers";
 import errorReducer from "./errorReducers";
 import productListingReducer from "./productListingReducers";
+import adminProductReducer from "./adminProductReducer";
 export default combineReducers({
   auth: authReducer,
+  productData: adminProductReducer,
   errors: errorReducer,
   lists: productListingReducer,
 });
