@@ -17,6 +17,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import AdminDashboard from "./components/Admin/dashboard";
 import ProductList from "./components/Admin/productList";
+import UpdateRecord from "./components/Admin/updateProduct";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -135,6 +136,7 @@ class App extends Component {
             />
             <Route exact path="/dashboard" component={AdminDashboard} />
             <Route exact path="/productLists" component={ProductList} />
+            <Route exact path="/updateProduct/:id" component={UpdateRecord} />
             <Route
               path="/"
               exact={true}

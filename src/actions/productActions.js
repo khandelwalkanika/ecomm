@@ -30,7 +30,6 @@ export const uploadData = (data) => {
   };
 };
 export const getProducts = () => (dispatch) => {
-  //fetch('/users').then(res => res.json())
   axios
     .get("http://localhost:5000/api/users/getProducts")
     .then((res) => {
@@ -52,22 +51,21 @@ export const storeProductInState = (products) => {
 };
 
 //update a product
-export const updateThisProduct = function (id) {
+export const updateThisProduct = function (updatedData, id, history) {
   return function (dispatch) {
     return axios
-      .post(`http://localhost:5000/api/users/updateProduct/${id}`)
+      .post(`http://localhost:5000/api/users/updateProduct/${id}`, updatedData)
       .then((res) => {
-        console.log(" response updated ", res.data);
-        dispatch(updateData());
-        // /return { ...state, productData: action.payload.products.filter( (post) => post._id !== action.payload.products._id ), };
+        dispatch(updateData(res.data.products));
+        history.push("/productLists");
       }) // re-direct to list page
       .catch((err) => console.log(err));
   };
 };
-export const updateData = () => {
+export const updateData = (products) => {
   return {
     type: UPDATE_PRODUCT,
-    payload: {},
+    payload: { products },
   };
 };
 
@@ -78,7 +76,6 @@ export const deleteThisProduct = function (id) {
       .delete(`http://localhost:5000/api/users/deleteProduct/${id}`)
       .then((res) => {
         dispatch(deleteData(res.data.products));
-        // /return { ...state, productData: action.payload.products.filter( (post) => post._id !== action.payload.products._id ), };
       }) // re-direct to list page
       .catch((err) => console.log(err));
   };

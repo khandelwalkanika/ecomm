@@ -21,6 +21,10 @@ class ProductLists extends Component {
     console.log("u clicked this id", id);
     this.props.deleteThisProduct(id);
   }
+
+  updateProduct(id) {
+    this.props.history.push(`/updateProduct/${id}`);
+  }
   render() {
     const { productData } = this.props;
 
@@ -56,7 +60,10 @@ class ProductLists extends Component {
                         >
                           <FontAwesomeIcon icon={faTrash} />{" "}
                         </a>
-                        <a href="./dashboard">
+                        <a
+                          href="#"
+                          onClick={this.updateProduct.bind(this, product._id)}
+                        >
                           <FontAwesomeIcon icon={faPencilAlt} />
                         </a>
                         <a href="./dashboard">
