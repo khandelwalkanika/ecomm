@@ -105,6 +105,7 @@ class UpdateRecord extends Component {
 UpdateRecord.propTypes = {
   updateThisProduct: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

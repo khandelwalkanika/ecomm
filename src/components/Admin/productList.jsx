@@ -30,9 +30,12 @@ class ProductLists extends Component {
 
     return (
       <>
-        <Card style={{ width: "70rem" }} className="text-center">
+        <Card style={{ width: "60rem" }}>
           <Card.Body>
-            <Card.Title>Product Info </Card.Title>
+            <Card.Header>
+              WELCOME ADMIN!! Here's your Product List!!
+            </Card.Header>
+            <Card.Header>Product Info</Card.Header>
             <Table responsive>
               <thead>
                 <tr>
@@ -87,10 +90,12 @@ ProductLists.propTypes = {
   deleteThisProduct: PropTypes.func.isRequired,
   productData: PropTypes.object.isRequired,
   logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   productData: state.productData.productData,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {

@@ -17,7 +17,7 @@ class LoginPage extends Component {
   }
   componentDidMount() {
     // If logged in and user navigates to Login page, should redirect them to product listings/admin dashboard
-    console.log("PROPSSS:", this.props);
+
     if (this.props.auth.isAuthenticated) {
       if (localStorage.userRole === "admin") {
         this.props.history.push("/productLists");
