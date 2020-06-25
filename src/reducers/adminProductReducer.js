@@ -10,7 +10,6 @@ const initialState = {
   productData: [],
 };
 export default function (state = initialState, action) {
-  console.log("state in admin reducer:", state);
   switch (action.type) {
     case ADD_PRODUCT:
       return {
@@ -34,6 +33,11 @@ export default function (state = initialState, action) {
     case INCREMENT_ITEM:
       return {
         ...state,
+        productData: state.productData.map((item) =>
+          item._id === action.payload.id
+            ? { ...item, numOfItems: item.numOfItems + 1 }
+            : item
+        ),
       };
     default:
       return state;

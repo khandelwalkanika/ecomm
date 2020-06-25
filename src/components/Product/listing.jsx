@@ -4,24 +4,15 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Card, Table, Image } from "react-bootstrap";
-import { getProducts } from "../../actions/productActions";
+import { getProducts, onAddingToCart } from "../../actions/productActions";
 //import myimagePath from "../../assets/images";
 class Listing extends Component {
   componentDidMount() {
     this.props.getProducts();
   }
 
-  onAdding(id, list) {
-    console.log(
-      "u clicked this id",
-      id,
-      " this.props.productData:",
-      this.props.productData
-    );
-    const index = this.props.productData.findIndex(
-      (item) => item._id === list._id
-    );
-    this.props.productData[index].numOfItems++;
+  onAdding(id) {
+    this.props.onAddingToCart(id);
   }
   render() {
     const { productData } = this.props;
@@ -56,7 +47,7 @@ class Listing extends Component {
                         <Card.Text>Price: ${list.price}</Card.Text>
                         <Button
                           variant="primary"
-                          onClick={this.onAdding.bind(this, list._id, list)}
+                          onClick={this.onAdding.bind(this, list._id)}
                         >
                           Add to Cart
                         </Button>
@@ -96,7 +87,7 @@ class Listing extends Component {
                         <Card.Text>Price: ${list.price}</Card.Text>
                         <Button
                           variant="primary"
-                          onClick={() => this.props.onAdding(list)}
+                          onClick={this.onAdding.bind(this, list._id)}
                         >
                           Add to Cart
                         </Button>
@@ -120,6 +111,7 @@ class Listing extends Component {
 
 Listing.propTypes = {
   getProducts: PropTypes.func.isRequired,
+  onAddingToCart: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   productData: PropTypes.object.isRequired,
 };
@@ -133,4 +125,5 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
   getProducts,
+  onAddingToCart,
 })(withRouter(Listing));

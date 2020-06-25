@@ -31,15 +31,15 @@ export const uploadData = (data) => {
   };
 };
 //onAddingtocart
-// export const onAddingToCart=(id)=>(dispatch)=>{
-//   dispatch(addToCart(id))
-// }
-// export const addToCart = (id) => {
-//   return {
-//     type: INCREMENT_ITEM,
-//     payload: id,
-//   };
-// };
+export const onAddingToCart = (id) => (dispatch) => {
+  dispatch(addToCart(id));
+};
+export const addToCart = (id) => {
+  return {
+    type: INCREMENT_ITEM,
+    payload: { id },
+  };
+};
 //get products
 export const getProducts = (id) => (dispatch) => {
   let url = "";
@@ -58,7 +58,7 @@ export const getProducts = (id) => (dispatch) => {
       } else {
         finalData = res.data.products;
       }
-      console.log("RESPONSE get products:", finalData);
+
       dispatch(storeProductInState(finalData));
     }) // re-direct to login on successful register
     .catch((err) =>
