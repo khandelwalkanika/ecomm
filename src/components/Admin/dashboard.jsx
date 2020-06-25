@@ -15,7 +15,7 @@ class AdminDashboard extends Component {
     const newProduct = {
       productName: this.state.itemName,
       price: this.state.price,
-      imagePath: this.state.imagePath,
+      imagePath: this.state.imagePath.replace("C:\\fakepath\\", ""),
       productType: this.state.itemType,
       numOfItems: 0,
     };
@@ -59,7 +59,7 @@ class AdminDashboard extends Component {
                 </Col>
               </Form.Group>
 
-              <Form.Group as={Row} controlId="formHorizontalPath">
+              {/* <Form.Group as={Row} controlId="formHorizontalPath">
                 <Form.Label column sm={3}>
                   Image Path
                 </Form.Label>
@@ -72,7 +72,7 @@ class AdminDashboard extends Component {
                     name="imagePath"
                   />
                 </Col>
-              </Form.Group>
+              </Form.Group> */}
               <Form.Group as={Row} controlId="formHorizontalItemType">
                 <Form.Label column sm={3}>
                   Type
@@ -86,6 +86,16 @@ class AdminDashboard extends Component {
                     name="itemType"
                   />
                 </Col>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.File
+                  id="exampleFormControlFile1"
+                  className="position-relative"
+                  label="Upload image"
+                  onChange={this.onChange}
+                  name="imagePath"
+                />
               </Form.Group>
 
               <Form.Group as={Row}>

@@ -4,12 +4,13 @@ import {
   GET_PRODUCT,
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
+  INCREMENT_ITEM,
 } from "../actions/types";
 const initialState = {
-  // isAuthenticated: false,
   productData: [],
 };
 export default function (state = initialState, action) {
+  console.log("state in admin reducer:", state);
   switch (action.type) {
     case ADD_PRODUCT:
       return {
@@ -29,6 +30,10 @@ export default function (state = initialState, action) {
       return {
         ...state,
         productData: action.payload.products,
+      };
+    case INCREMENT_ITEM:
+      return {
+        ...state,
       };
     default:
       return state;

@@ -27,7 +27,6 @@ class ProductLists extends Component {
   }
   render() {
     const { productData } = this.props;
-
     return (
       <>
         <Card style={{ width: "60rem" }}>
@@ -59,7 +58,15 @@ class ProductLists extends Component {
                       <div>
                         <a
                           href="#"
-                          onClick={this.deleteProduct.bind(this, product._id)}
+                          onClick={() => {
+                            if (window.confirm("Delete the item?")) {
+                              let deleteProduct = this.deleteProduct.bind(
+                                this,
+                                product._id
+                              ); //bind will return to reference to binded function and not call it.
+                              deleteProduct();
+                            }
+                          }}
                         >
                           <FontAwesomeIcon icon={faTrash} />{" "}
                         </a>

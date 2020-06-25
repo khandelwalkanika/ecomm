@@ -5,6 +5,7 @@ import {
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
   GET_ERRORS,
+  INCREMENT_ITEM,
 } from "./types";
 
 export const uploadProduct = function (productData, history) {
@@ -29,11 +30,36 @@ export const uploadData = (data) => {
     payload: data,
   };
 };
-export const getProducts = () => (dispatch) => {
+//onAddingtocart
+// export const onAddingToCart=(id)=>(dispatch)=>{
+//   dispatch(addToCart(id))
+// }
+// export const addToCart = (id) => {
+//   return {
+//     type: INCREMENT_ITEM,
+//     payload: id,
+//   };
+// };
+//get products
+export const getProducts = (id) => (dispatch) => {
+  let url = "";
+  if (id) {
+    url = `http://localhost:5000/api/users/getProducts/${id}`;
+  } else {
+    url = "http://localhost:5000/api/users/getProducts";
+  }
+  console.log("URL SELECTED:", url);
   axios
-    .get("http://localhost:5000/api/users/getProducts")
+    .get(url)
     .then((res) => {
-      dispatch(storeProductInState(res.data.products));
+      let finalData;
+      if (id) {
+        finalData = res.data;
+      } else {
+        finalData = res.data.products;
+      }
+      console.log("RESPONSE get products:", finalData);
+      dispatch(storeProductInState(finalData));
     }) // re-direct to login on successful register
     .catch((err) =>
       dispatch({
@@ -42,14 +68,13 @@ export const getProducts = () => (dispatch) => {
       })
     );
 };
-//get products
+
 export const storeProductInState = (products) => {
   return {
     type: GET_PRODUCT,
     payload: { products },
   };
 };
-
 //update a product
 export const updateThisProduct = function (updatedData, id, history) {
   return function (dispatch) {

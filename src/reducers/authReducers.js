@@ -7,7 +7,6 @@ const initialState = {
   loading: false,
 };
 export default function (state = initialState, action) {
-  console.log("authReducer:", action.payload);
   switch (action.type) {
     case SET_CURRENT_USER:
       return {

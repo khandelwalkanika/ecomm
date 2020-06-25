@@ -1,17 +1,37 @@
 import React, { Component } from "react";
 import "./listing.css";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Card, Table, Image } from "react-bootstrap";
-//import Lists from "./lists";
+import { getProducts } from "../../actions/productActions";
+//import myimagePath from "../../assets/images";
 class Listing extends Component {
-  // componentDidMount() {
-  //   console.log("Im in listings didmount", this.props.getProducts());
-  //   this.props.getProducts();
-  // }
+  componentDidMount() {
+    this.props.getProducts();
+  }
 
+  onAdding(id, list) {
+    console.log(
+      "u clicked this id",
+      id,
+      " this.props.productData:",
+      this.props.productData
+    );
+    const index = this.props.productData.findIndex(
+      (item) => item._id === list._id
+    );
+    this.props.productData[index].numOfItems++;
+  }
   render() {
-    //for background color of the card bg="dark"
+    const { productData } = this.props;
+    const rings = productData.filter(
+      (product) => product.productType === "rings"
+    );
+    const necklaces = productData.filter(
+      (product) => product.productType === "necklace"
+    );
+
     return (
       <>
         <Card style={{ width: "70rem" }}>
@@ -19,7 +39,7 @@ class Listing extends Component {
           <Table responsive>
             <tbody>
               <tr>
-                {this.props.rings.map((list, i) => (
+                {rings.map((list, i) => (
                   <td>
                     <Card
                       border="dark"
@@ -29,14 +49,14 @@ class Listing extends Component {
                       <Image
                         className="listing-images"
                         thumbnail
-                        src={list.imgPath}
+                        src={require(`../../assets/images/${list.imagePath}`)}
                       />
                       <Card.Body>
                         <Card.Title> {list.productName}</Card.Title>
                         <Card.Text>Price: ${list.price}</Card.Text>
                         <Button
                           variant="primary"
-                          onClick={() => this.props.onAdding(list)}
+                          onClick={this.onAdding.bind(this, list._id, list)}
                         >
                           Add to Cart
                         </Button>
@@ -53,22 +73,23 @@ class Listing extends Component {
             </tbody>
           </Table>
         </Card>
+
         <Card style={{ width: "70rem" }}>
           <Card.Header>Necklaces...</Card.Header>
           <Table responsive>
             <tbody>
               <tr>
-                {this.props.necklace.map((list, i) => (
+                {necklaces.map((list, i) => (
                   <td>
                     <Card
-                      style={{ width: "16rem" }}
                       border="dark"
+                      style={{ width: "16rem" }}
                       key={list.id}
                     >
                       <Image
                         className="listing-images"
                         thumbnail
-                        src={list.imgPath}
+                        src={require(`../../assets/images/${list.imagePath}`)}
                       />
                       <Card.Body>
                         <Card.Title> {list.productName}</Card.Title>
@@ -98,11 +119,18 @@ class Listing extends Component {
 }
 
 Listing.propTypes = {
-  // getProducts: PropTypes.func.isRequired,
+  getProducts: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  productData: PropTypes.object.isRequired,
 };
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  lists: state.lists,
-});
-export default connect(mapStateToProps)(Listing);
+const mapStateToProps = (state) => {
+  console.log(" MAP STP", state);
+  return {
+    auth: state.auth,
+    productData: state.productData.productData,
+    lists: state.lists,
+  };
+};
+export default connect(mapStateToProps, {
+  getProducts,
+})(withRouter(Listing));
