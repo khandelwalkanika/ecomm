@@ -3,7 +3,7 @@ import { Button, Form, Col, Container, Card } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
-import { placeOrder } from "../../actions/authActions";
+import { onCheckout } from "../../actions/productActions";
 import classnames from "classnames";
 
 import { withRouter } from "react-router-dom";
@@ -32,7 +32,7 @@ class Checkout extends Component {
     const userInfo = {
       email: this.state.email,
       orderNumber: "101",
-      totalPrice: "1000",
+      totalPrice: this.props.totalPrice,
       address: this.state.address,
       address2: this.state.address2,
       city: this.state.city,
@@ -40,8 +40,12 @@ class Checkout extends Component {
       zip: this.state.zip,
     };
     console.log("Info entered:", userInfo);
-    this.props.placeOrder(userInfo, this.props.history);
+    this.props.onCheckout(userInfo, this.props.history);
   };
+
+  // onPlaceOrder() {
+  //   this.props.onPlaceOrder(this.props.history);
+  // }
 
   render() {
     const { errors } = this.state;
@@ -129,7 +133,7 @@ class Checkout extends Component {
                 </Form.Row>
 
                 <Button variant="primary" type="submit">
-                  Checkout
+                  Place Order
                 </Button>
               </Form>
             </Card.Body>
@@ -141,13 +145,16 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
-  placeOrder: PropTypes.func.isRequired,
+  onCheckout: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  totalPrice: PropTypes.number.isRequired,
 };
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  totalPrice: state.productData.totalPrice,
 });
-export default connect(mapStateToProps, { logoutUser, placeOrder })(
-  withRouter(Checkout)
-);
+export default connect(mapStateToProps, {
+  logoutUser,
+  onCheckout,
+})(withRouter(Checkout));

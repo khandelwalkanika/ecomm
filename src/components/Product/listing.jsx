@@ -7,10 +7,33 @@ import { Button, Card, Table, Image } from "react-bootstrap";
 import { getProducts, onAddingToCart } from "../../actions/productActions";
 //import myimagePath from "../../assets/images";
 class Listing extends Component {
+  // state = {
+  //   productLocalData: [],
+  // };
   componentDidMount() {
-    this.props.getProducts();
+    if (this.props.productData.length === 0) {
+      this.props.getProducts();
+    }
   }
-
+  componentWillReceiveProps(nextProps) {
+    // console.log(" LISTING NEXT PROPS:", nextProps);
+    // newList = nextProps.cart.map((item) => {
+    //   let item2 = nextProps.productData.find(
+    //     (i2) => i2.numOfItems === item.numOfItems
+    //   );
+    //   return item2 ? { ...item, ...item2 } : item;
+    // });
+    // console.log(newList, "<---new list");
+    // let newList = nextProps.productData.map((item) => {
+    //   const cartItemById = nextProps.cart.find((x) => x[item._id]);
+    //   return cartItemById
+    //     ? { ...item, numOfItems: cartItemById.numOfItems }
+    //     : item;
+    // });
+    // this.setState({
+    //   productLocalData: newList,
+    // });
+  }
   onAdding(id) {
     this.props.onAddingToCart(id);
   }
@@ -121,6 +144,7 @@ const mapStateToProps = (state) => {
     auth: state.auth,
     productData: state.productData.productData,
     lists: state.lists,
+    cart: state.productData.cart,
   };
 };
 export default connect(mapStateToProps, {

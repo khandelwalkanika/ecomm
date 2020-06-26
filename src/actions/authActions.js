@@ -18,20 +18,27 @@ export const registerUser = function (userData, history) {
 };
 
 //Placing Order- CHECKOUT
-export const placeOrder = (userData, history) => (dispatch) => {
-  axios
-    .post("http://localhost:5000/api/users/checkout", userData)
-    .then((res) => {
-      console.log("RES ORDER:", res, "-- HISTORY-->", history);
-      history.push("/listings");
-    }) // re-direct to listings on successful checkout
-    .catch((err) =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
-};
+// export const placeOrder = (userData, history) => (dispatch) => {
+//   axios
+//     .post("http://localhost:5000/api/users/checkout", userData)
+//     .then((res) => {
+//       dispatch(placeOrder());
+//       history.push("/listings");
+//     }) // re-direct to listings on successful checkout
+//     .catch((err) =>
+//       dispatch({
+//         type: GET_ERRORS,
+//         payload: err.response.data,
+//       })
+//     );
+// };
+
+// export const placeOrder = () => {
+//   return {
+//     type: PLACE_ORDER,
+//     payload: {},
+//   };
+// };
 // Login - get user token
 export const loginUser = (userData) => (dispatch) => {
   axios

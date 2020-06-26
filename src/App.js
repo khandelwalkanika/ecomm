@@ -111,7 +111,7 @@ class App extends Component {
 
     const newListsRings = [...this.state.listingsRings];
     const newListsNecklace = [...this.state.listingsNecklace];
-    console.log("Do i even get called?");
+
     for (let i in newListsRings) {
       newListsRings[i].numOfItems = 0;
     }

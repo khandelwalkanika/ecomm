@@ -7,3 +7,7 @@ export const GET_PRODUCT = "GET_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const INCREMENT_ITEM = "INCREMENT_ITEM";
+export const CART_ITEM = "CART_ITEM";
+export const DELETE_ITEM = "DELETE_ITEM";
+export const SET_PRICE = "SET_PRICE";
+export const PLACE_ORDER = "PLACE_ORDER";

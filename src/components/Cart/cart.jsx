@@ -3,19 +3,46 @@ import { Button, Card, ListGroup, Col, Container, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-
+import {
+  yourCart,
+  onDeletingFromCart,
+  setPrice,
+} from "../../actions/productActions";
 import { withRouter } from "react-router-dom";
 class Cart extends Component {
-  componentDidUpdate() {
-    console.log("--------<>", this.props);
+  componentDidMount() {
+    this.props.yourCart();
   }
-
   state = {
     totalPrice: 0,
-    cartData: [],
   };
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log(prevState, "PREV STATE");
+  // }
+
+  componentWillReceiveProps(nextProps) {
+    let totalP = 0;
+    totalP = nextProps.cart.map((item) => {
+      return totalP + item.numOfItems * item.price;
+    });
+
+    console.log("NEXT PROPS:::", totalP);
+    var TP = totalP.reduce(function (a, b) {
+      return a + b;
+    }, 0);
+    this.setState({
+      totalPrice: TP,
+    });
+    this.props.setPrice(TP);
+  }
+
+  onDelete(id) {
+    this.props.onDeletingFromCart(id);
+  }
 
   render() {
+    const cart = this.props.cart;
+
     return (
       <>
         <Container>
@@ -23,15 +50,15 @@ class Cart extends Component {
             <Col sm={10}>
               <Card style={{ width: "40rem" }}>
                 <Card.Header>
-                  You have {this.props.cartData.length} items in your cart!!
+                  You have {cart.length} items in your cart!!
                 </Card.Header>
 
-                {this.props.cartData.map((list, i) => (
-                  <ListGroup.Item>
+                {cart.map((list, i) => (
+                  <ListGroup.Item key={i}>
                     <div className="div-style">
-                      <div className="idiv-size" key={i}>
+                      <div className="idiv-size">
                         <img
-                          src={list.imgPath}
+                          src={list.imagePath}
                           alt={"boohoo"}
                           className="img-responsive "
                           style={{ height: "100px" }}
@@ -60,13 +87,7 @@ class Cart extends Component {
                       </div>
                       <div className="idiv-size">
                         <button
-                          onClick={() =>
-                            this.props.onDelete(
-                              list.id,
-                              list.type,
-                              this.props.cartData
-                            )
-                          }
+                          onClick={this.onDelete.bind(this, list._id)}
                           type="button"
                           className="btn btn-danger"
                         >
@@ -82,9 +103,7 @@ class Cart extends Component {
 
           <Card style={{ width: "40rem" }} className="text-center">
             <Card.Body>
-              <Card.Title>
-                Total amount : $ {getTotalPrice(this.props.cartData)}
-              </Card.Title>
+              <Card.Title>Total amount : $ {this.state.totalPrice}</Card.Title>
             </Card.Body>
             <Card.Footer className="text-muted">
               <Button
@@ -114,20 +133,36 @@ class Cart extends Component {
 
 Cart.propTypes = {
   logoutUser: PropTypes.func.isRequired,
+  yourCart: PropTypes.func.isRequired,
+  onDeletingFromCart: PropTypes.func.isRequired,
+  setPrice: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  productData: PropTypes.object.isRequired,
+  totalPrice: PropTypes.number.isRequired,
 };
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-export default connect(mapStateToProps, { logoutUser })(withRouter(Cart));
+const mapStateToProps = (state) => {
+  console.log("state in cart", state);
+  return {
+    auth: state.auth,
+    productData: state.productData.productData,
+    cart: state.productData.cart,
+    totalPrice: state.totalPrice,
+  };
+};
+export default connect(mapStateToProps, {
+  logoutUser,
+  yourCart,
+  onDeletingFromCart,
+  setPrice,
+})(withRouter(Cart));
 
-function getTotalPrice(cartData) {
-  let totalPrice = 0;
-  cartData.forEach((item) => {
-    totalPrice = totalPrice + item.numOfItems * item.price;
-  });
-  return totalPrice;
-}
+// function getTotalPrice(cartData) {
+//   let totalPrice = 0;
+//   cartData.forEach((item) => {
+//     totalPrice = totalPrice + item.numOfItems * item.price;
+//   });
+//   return totalPrice;
+// }
 
 // function deleteItem(cartData1) {
 //   console.log("--kkk---->", cartData1);
