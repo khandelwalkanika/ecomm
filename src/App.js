@@ -134,9 +134,7 @@ class App extends Component {
               onClickCart={this.clickCart}
               isAuth={this.state.isAuthenticated}
             />
-            <Route exact path="/dashboard" component={AdminDashboard} />
-            <Route exact path="/productLists" component={ProductList} />
-            <Route exact path="/updateProduct/:id" component={UpdateRecord} />
+
             <Route
               path="/"
               exact={true}
@@ -145,6 +143,21 @@ class App extends Component {
             />
             <Route path="/register" exact render={() => <Register />} />
             <Switch>
+              <PrivateRoute
+                exact
+                path="/dashboard"
+                component={AdminDashboard}
+              />
+              <PrivateRoute
+                exact
+                path="/productLists"
+                component={ProductList}
+              />
+              <PrivateRoute
+                exact
+                path="/updateProduct/:id"
+                component={UpdateRecord}
+              />
               <PrivateRoute
                 exact
                 path="/listings"
