@@ -6,19 +6,37 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { uploadProduct } from "../../actions/productActions";
 class AdminDashboard extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedFile: null,
+    };
+  }
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  onChangeHandler = (event) => {
+    console.log(event.target.files[0]);
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0,
+    });
+  };
+  //this.state.imagePath.replace("C:\\fakepath\\", ""),
   onSubmit = (e) => {
     e.preventDefault();
+
+    const file = document.getElementById("exampleFormControlFile1").files;
+    const formData = new FormData();
+
     const newProduct = {
       productName: this.state.itemName,
       price: this.state.price,
-      imagePath: this.state.imagePath.replace("C:\\fakepath\\", ""),
+      imagePath: this.state.selectedFile,
       productType: this.state.itemType,
       numOfItems: 0,
     };
+    newProduct.append("img", file[0]);
     console.log("new product info:", newProduct);
     this.props.uploadProduct(newProduct, this.props.history);
   };
@@ -59,20 +77,6 @@ class AdminDashboard extends Component {
                 </Col>
               </Form.Group>
 
-              {/* <Form.Group as={Row} controlId="formHorizontalPath">
-                <Form.Label column sm={3}>
-                  Image Path
-                </Form.Label>
-                <Col sm={8}>
-                  <Form.Control
-                    type="text"
-                    placeholder="paste your image path"
-                    onChange={this.onChange}
-                    value={this.state.imagePath}
-                    name="imagePath"
-                  />
-                </Col>
-              </Form.Group> */}
               <Form.Group as={Row} controlId="formHorizontalItemType">
                 <Form.Label column sm={3}>
                   Type
@@ -93,7 +97,7 @@ class AdminDashboard extends Component {
                   id="exampleFormControlFile1"
                   className="position-relative"
                   label="Upload image"
-                  onChange={this.onChange}
+                  onChange={this.onChangeHandler}
                   name="imagePath"
                 />
               </Form.Group>
