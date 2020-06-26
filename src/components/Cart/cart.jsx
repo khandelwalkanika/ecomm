@@ -58,7 +58,7 @@ class Cart extends Component {
                     <div className="div-style">
                       <div className="idiv-size">
                         <img
-                          src={list.imagePath}
+                          src={require(`../../assets/images/${list.imagePath}`)}
                           alt={"boohoo"}
                           className="img-responsive "
                           style={{ height: "100px" }}
