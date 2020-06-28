@@ -1,19 +1,51 @@
 import React, { Component } from "react";
 import "./listing.css";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
 import { Button, Card, Table, Image } from "react-bootstrap";
-//import Lists from "./lists";
+import { getProducts, onAddingToCart } from "../../actions/productActions";
+//import myimagePath from "../../assets/images";
 class Listing extends Component {
-  // componentDidMount() {
-  //   console.log("Im in listings didmount", this.props.getProducts());
-  //   this.props.getProducts();
-  // }
-
+  // state = {
+  //   productLocalData: [],
+  // };
+  componentDidMount() {
+    if (this.props.productData.length === 0) {
+      this.props.getProducts();
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    // console.log(" LISTING NEXT PROPS:", nextProps);
+    // newList = nextProps.cart.map((item) => {
+    //   let item2 = nextProps.productData.find(
+    //     (i2) => i2.numOfItems === item.numOfItems
+    //   );
+    //   return item2 ? { ...item, ...item2 } : item;
+    // });
+    // console.log(newList, "<---new list");
+    // let newList = nextProps.productData.map((item) => {
+    //   const cartItemById = nextProps.cart.find((x) => x[item._id]);
+    //   return cartItemById
+    //     ? { ...item, numOfItems: cartItemById.numOfItems }
+    //     : item;
+    // });
+    // this.setState({
+    //   productLocalData: newList,
+    // });
+  }
+  onAdding(id) {
+    this.props.onAddingToCart(id);
+  }
   render() {
-    //const { user } = this.props.auth;
-    //for background color of the card bg="dark"
+    const { productData } = this.props;
+    const rings = productData.filter(
+      (product) => product.productType === "rings"
+    );
+    const necklaces = productData.filter(
+      (product) => product.productType === "necklace"
+    );
+
     return (
       <>
         <Card style={{ width: "70rem" }}>
@@ -21,7 +53,7 @@ class Listing extends Component {
           <Table responsive>
             <tbody>
               <tr>
-                {this.props.rings.map((list, i) => (
+                {rings.map((list, i) => (
                   <td>
                     <Card
                       border="dark"
@@ -31,14 +63,14 @@ class Listing extends Component {
                       <Image
                         className="listing-images"
                         thumbnail
-                        src={list.imgPath}
+                        src={`http://localhost:5000/${list.imagePath}`}
                       />
                       <Card.Body>
                         <Card.Title> {list.productName}</Card.Title>
                         <Card.Text>Price: ${list.price}</Card.Text>
                         <Button
                           variant="primary"
-                          onClick={() => this.props.onAdding(list)}
+                          onClick={this.onAdding.bind(this, list._id)}
                         >
                           Add to Cart
                         </Button>
@@ -55,29 +87,31 @@ class Listing extends Component {
             </tbody>
           </Table>
         </Card>
+
         <Card style={{ width: "70rem" }}>
           <Card.Header>Necklaces...</Card.Header>
           <Table responsive>
             <tbody>
               <tr>
-                {this.props.necklace.map((list, i) => (
+                {necklaces.map((list, i) => (
                   <td>
                     <Card
-                      style={{ width: "16rem" }}
                       border="dark"
+                      style={{ width: "16rem" }}
                       key={list.id}
                     >
                       <Image
                         className="listing-images"
                         thumbnail
-                        src={list.imgPath}
+                        src={`http://localhost:5000/${list.imagePath}`}
+                        // src={require(`../../assets/images/${list.imagePath}`)}
                       />
                       <Card.Body>
                         <Card.Title> {list.productName}</Card.Title>
                         <Card.Text>Price: ${list.price}</Card.Text>
                         <Button
                           variant="primary"
-                          onClick={() => this.props.onAdding(list)}
+                          onClick={this.onAdding.bind(this, list._id)}
                         >
                           Add to Cart
                         </Button>
@@ -100,11 +134,21 @@ class Listing extends Component {
 }
 
 Listing.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  // getProducts: PropTypes.func.isRequired,
+  getProducts: PropTypes.func.isRequired,
+  onAddingToCart: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  productData: PropTypes.object.isRequired,
 };
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-export default connect(mapStateToProps, { logoutUser })(Listing);
+const mapStateToProps = (state) => {
+  console.log(" MAP STP", state);
+  return {
+    auth: state.auth,
+    productData: state.productData.productData,
+    lists: state.lists,
+    cart: state.productData.cart,
+  };
+};
+export default connect(mapStateToProps, {
+  getProducts,
+  onAddingToCart,
+})(withRouter(Listing));

@@ -10,20 +10,20 @@ import Checkout from "./components/Checkout/checkout";
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-//import PrivateRoute from "./PrivateRoute";
-// import { AuthContext } from "./context/auth";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
-
+import AdminDashboard from "./components/Admin/dashboard";
+import ProductList from "./components/Admin/productList";
+import UpdateRecord from "./components/Admin/updateProduct";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
-
   const token = localStorage.jwtToken;
   setAuthToken(token);
+  //const userRole = localStorage.userRole;
   // Decode token and get user info and expired token
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
@@ -34,7 +34,7 @@ if (localStorage.jwtToken) {
     // Logout user
     store.dispatch(logoutUser());
     // Redirect to login
-    window.location.href = "./login";
+    window.location.href = "./";
   }
 }
 
@@ -111,7 +111,7 @@ class App extends Component {
 
     const newListsRings = [...this.state.listingsRings];
     const newListsNecklace = [...this.state.listingsNecklace];
-    console.log("Do i even get called?");
+
     for (let i in newListsRings) {
       newListsRings[i].numOfItems = 0;
     }
@@ -124,6 +124,7 @@ class App extends Component {
       cart: [],
     });
   };
+
   render() {
     return (
       <>
@@ -133,7 +134,6 @@ class App extends Component {
               onClickCart={this.clickCart}
               isAuth={this.state.isAuthenticated}
             />
-
             <Route
               path="/"
               exact={true}
@@ -142,6 +142,21 @@ class App extends Component {
             />
             <Route path="/register" exact render={() => <Register />} />
             <Switch>
+              <PrivateRoute
+                exact
+                path="/dashboard"
+                component={AdminDashboard}
+              />
+              <PrivateRoute
+                exact
+                path="/productLists"
+                component={ProductList}
+              />
+              <PrivateRoute
+                exact
+                path="/updateProduct/:id"
+                component={UpdateRecord}
+              />
               <PrivateRoute
                 exact
                 path="/listings"

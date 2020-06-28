@@ -21,7 +21,12 @@ class HeaderNav extends Component {
           <Navbar.Brand href="#home">Net-Jewels-Price</Navbar.Brand>
           <Nav className="mr-auto"></Nav>
           <Button
-            hidden={this.props.auth.isAuthenticated ? "" : "hidden"}
+            hidden={
+              this.props.auth.isAuthenticated &&
+              localStorage.userRole !== "admin"
+                ? ""
+                : "hidden"
+            }
             variant="outline-success"
             onClick={() => {
               this.props.onClickCart(this.props);

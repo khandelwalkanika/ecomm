@@ -1,7 +1,7 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types"; //SET_LISTS
 // Register User
 export const registerUser = function (userData, history) {
   return function (dispatch) {
@@ -16,30 +16,15 @@ export const registerUser = function (userData, history) {
       );
   };
 };
-//Placing Order- CHECKOUT
-export const placeOrder = (userData, history) => (dispatch) => {
-  axios
-    .post("http://localhost:5000/api/users/checkout", userData)
-    .then((res) => {
-      console.log("RES ORDER:", res, "-- HISTORY-->", history);
-      history.push("/listings");
-    }) // re-direct to listings on successful checkout
-    .catch((err) =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
-};
 
-// export const getProducts = () => (dispatch) => {
-//   //fetch('/users').then(res => res.json())
+//Placing Order- CHECKOUT
+// export const placeOrder = (userData, history) => (dispatch) => {
 //   axios
-//     .get("http://localhost:5000/api/users/getProducts")
+//     .post("http://localhost:5000/api/users/checkout", userData)
 //     .then((res) => {
-//       console.log("All products---->", res.data);
-//       dispatch(storeProductInState(res.data.products));
-//     }) // re-direct to login on successful register
+//       dispatch(placeOrder());
+//       history.push("/listings");
+//     }) // re-direct to listings on successful checkout
 //     .catch((err) =>
 //       dispatch({
 //         type: GET_ERRORS,
@@ -47,11 +32,11 @@ export const placeOrder = (userData, history) => (dispatch) => {
 //       })
 //     );
 // };
-// //get products
-// export const storeProductInState = (data) => {
+
+// export const placeOrder = () => {
 //   return {
-//     type: SET_LISTS,
-//     payload: data,
+//     type: PLACE_ORDER,
+//     payload: {},
 //   };
 // };
 // Login - get user token
@@ -61,14 +46,16 @@ export const loginUser = (userData) => (dispatch) => {
     .then((res) => {
       // Save to localStorage
       // Set token to localStorage
-      const { token } = res.data;
+      const { token, userRole } = res.data;
       localStorage.setItem("jwtToken", token);
+      localStorage.setItem("userRole", userRole);
       /* The usage of the local storage is fairly straight forward. In your JavaScript code, running in the browser, you should have access to the localStorage instance which has setter and getter to store and retrieve data from the local storage */
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data ~decoding JWTs token which are Base64Url encoded
       const decoded = jwt_decode(token);
       // Set current user
+      // const userData1 = { decoded, userRole };
       dispatch(setCurrentUser(decoded));
     })
     .catch((err) =>
