@@ -63,7 +63,7 @@ class Listing extends Component {
                       <Image
                         className="listing-images"
                         thumbnail
-                        src={`http://localhost:5000/${list.imagePath}`}
+                        src={list.imagePath}
                       />
                       <Card.Body>
                         <Card.Title> {list.productName}</Card.Title>
@@ -103,7 +103,7 @@ class Listing extends Component {
                       <Image
                         className="listing-images"
                         thumbnail
-                        src={`http://localhost:5000/${list.imagePath}`}
+                        src={list.imagePath}
                         // src={require(`../../assets/images/${list.imagePath}`)}
                       />
                       <Card.Body>
