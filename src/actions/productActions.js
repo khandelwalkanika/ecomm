@@ -15,7 +15,9 @@ import {
 export const uploadProduct = function (productData, history) {
   return function (dispatch) {
     return axios
-      .post("http://localhost:5000/api/users/uploadProducts", productData)
+      .post("http://localhost:5000/api/users/uploadProducts", productData, {
+        headers: { "content-type": "multipart/form-data" },
+      })
       .then((res) => {
         dispatch(uploadData(res.data));
         history.push("/productLists");
@@ -137,7 +139,13 @@ export const storeProductInState = (products) => {
 export const updateThisProduct = function (updatedData, id, history) {
   return function (dispatch) {
     return axios
-      .post(`http://localhost:5000/api/users/updateProduct/${id}`, updatedData)
+      .post(
+        `http://localhost:5000/api/users/updateProduct/${id}`,
+        updatedData,
+        {
+          headers: { "content-type": "multipart/form-data" },
+        }
+      )
       .then((res) => {
         dispatch(updateData(res.data.products));
         history.push("/productLists");

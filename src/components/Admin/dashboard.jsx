@@ -6,39 +6,34 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { uploadProduct } from "../../actions/productActions";
 class AdminDashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedFile: null,
-    };
-  }
+  state = {};
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+    if (e.target.name === "imagePath") {
+      this.setState({ [e.target.name]: e.target.files[0] });
+    }
   };
-  onChangeHandler = (event) => {
-    console.log(event.target.files[0]);
-    this.setState({
-      selectedFile: event.target.files[0],
-      loaded: 0,
-    });
-  };
-  //this.state.imagePath.replace("C:\\fakepath\\", ""),
   onSubmit = (e) => {
     e.preventDefault();
+    // const file = document.getElementById("exampleFormControlFile1").files;
 
-    const file = document.getElementById("exampleFormControlFile1").files;
     const formData = new FormData();
 
-    const newProduct = {
-      productName: this.state.itemName,
-      price: this.state.price,
-      imagePath: this.state.selectedFile,
-      productType: this.state.itemType,
-      numOfItems: 0,
-    };
-    newProduct.append("img", file[0]);
-    console.log("new product info:", newProduct);
-    this.props.uploadProduct(newProduct, this.props.history);
+    formData.append("imagePath", this.state.imagePath);
+    formData.append("productName", this.state.itemName);
+    formData.append("price", this.state.price);
+    formData.append("productType", this.state.itemType);
+    formData.append("numOfItems", 0);
+    // console.log("formData", formData.get("photo"));
+    // const newProduct = {
+    //   productName: this.state.itemName,
+    //   price: this.state.price,
+    //   imagePath: file[0],
+    //   productType: this.state.itemType,
+    //   numOfItems: 0,
+    // };
+    // console.log("new product info:", newProduct);
+    this.props.uploadProduct(formData, this.props.history);
   };
   render() {
     return (
@@ -84,7 +79,7 @@ class AdminDashboard extends Component {
                 <Col sm={8}>
                   <Form.Control
                     type="text"
-                    placeholder="whats the type???"
+                    placeholder="whats the type??"
                     onChange={this.onChange}
                     value={this.state.itemType}
                     name="itemType"
@@ -97,7 +92,7 @@ class AdminDashboard extends Component {
                   id="exampleFormControlFile1"
                   className="position-relative"
                   label="Upload image"
-                  onChange={this.onChangeHandler}
+                  onChange={this.onChange}
                   name="imagePath"
                 />
               </Form.Group>

@@ -22,21 +22,33 @@ class UpdateRecord extends Component {
   }
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+    if (e.target.name === "imagePath") {
+      this.setState({ [e.target.name]: e.target.files[0] });
+    }
   };
   onSubmit = (e) => {
     e.preventDefault();
     const productId = this.props.history.location.pathname.split("/")[2];
-    const newProduct = {
-      productName: this.state.itemName,
-      price: this.state.price,
-      imagePath: this.state.imagePath.replace("C:\\fakepath\\", ""),
-      productType: this.state.itemType,
-      numOfItems: 0,
-    };
-    this.props.updateThisProduct(newProduct, productId, this.props.history);
+
+    const formData = new FormData();
+
+    formData.append("imagePath", this.state.imagePath);
+    formData.append("productName", this.state.itemName);
+    formData.append("price", this.state.price);
+    formData.append("productType", this.state.itemType);
+    formData.append("numOfItems", 0);
+
+    // const newProduct = {
+    //   productName: this.state.itemName,
+    //   price: this.state.price,
+    //   imagePath: this.state.imagePath.replace("C:\\fakepath\\", ""),
+    //   productType: this.state.itemType,
+    //   numOfItems: 0,
+    // };
+    this.props.updateThisProduct(formData, productId, this.props.history);
   };
   render() {
-    const { productData } = this.props.productData;
+    //const { productData } = this.props.productData;
 
     return (
       <>
@@ -51,7 +63,6 @@ class UpdateRecord extends Component {
                 <Col sm={8}>
                   <Form.Control
                     type="text"
-                    // defaultValue={productData.productName}
                     onChange={this.onChange}
                     value={this.state.itemName}
                     name="itemName"
