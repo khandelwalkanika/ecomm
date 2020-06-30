@@ -1,6 +1,7 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
+import { call, put } from "redux-saga/effects";
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types"; //SET_LISTS
 // Register User
 export const registerUser = function (userData, history) {
@@ -40,38 +41,62 @@ export const registerUser = function (userData, history) {
 //   };
 // };
 // Login - get user token
-export const loginUser = (userData) => (dispatch) => {
-  axios
-    .post("http://localhost:5000/api/users/login", userData)
-    .then((res) => {
-      // Save to localStorage
-      // Set token to localStorage
-      const { token, userRole } = res.data;
-      localStorage.setItem("jwtToken", token);
-      localStorage.setItem("userRole", userRole);
-      /* The usage of the local storage is fairly straight forward. In your JavaScript code, running in the browser, you should have access to the localStorage instance which has setter and getter to store and retrieve data from the local storage */
-      // Set token to Auth header
-      setAuthToken(token);
-      // Decode token to get user data ~decoding JWTs token which are Base64Url encoded
-      const decoded = jwt_decode(token);
-      // Set current user
-      // const userData1 = { decoded, userRole };
-      dispatch(setCurrentUser(decoded));
-    })
-    .catch((err) =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
-};
+export function loginUser(payload) {
+  return { type: "SET_CURRENT_USER", payload };
+}
+
+// export const loginUser = (userData) => (dispatch) => {
+//   axios
+//     .post("http://localhost:5000/api/users/login", userData)
+//     .then((res) => {
+//       // Save to localStorage
+//       // Set token to localStorage
+//       const { token, userRole } = res.data;
+//       localStorage.setItem("jwtToken", token);
+//       localStorage.setItem("userRole", userRole);
+//       /* The usage of the local storage is fairly straight forward. In your JavaScript code, running in the browser, you should have access to the localStorage instance which has setter and getter to store and retrieve data from the local storage */
+//       // Set token to Auth header
+//       setAuthToken(token);
+//       // Decode token to get user data ~decoding JWTs token which are Base64Url encoded
+//       const decoded = jwt_decode(token);
+//       // Set current user
+//       // const userData1 = { decoded, userRole };
+//       dispatch(setCurrentUser(decoded));
+//     })
+//     .catch((err) =>
+//       dispatch({
+//         type: GET_ERRORS,
+//         payload: err.response.data,
+//       })
+//     );
+// };
 // Set logged in user
-export const setCurrentUser = (decoded) => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: decoded,
-  };
-};
+// export const setCurrentUser = (decoded) => {
+//   return {
+//     type: SET_CURRENT_USER,
+//     payload: decoded,
+//   };
+// };
+
+//SAGA
+// const loginUserData = (userData) => {
+//   return axios.post("http://localhost:5000/api/users/login", userData);
+// };
+
+// export function* loginUser(userData) {
+//   try {
+//     const response = yield call(loginUserData(userData));
+//     const { token, userRole } = response.data;
+//     localStorage.setItem("jwtToken", token);
+//     localStorage.setItem("userRole", userRole);
+//     setAuthToken(token);
+//     const decoded = jwt_decode(token);
+//     yield put({ type: SET_CURRENT_USER, payload: { decoded } });
+//   } catch (e) {
+//     console.log("Error in login:", e);
+//   }
+// }
+
 // User loading
 export const setUserLoading = () => {
   return {
@@ -85,5 +110,5 @@ export const logoutUser = () => (dispatch) => {
   // Remove auth header for future requests
   setAuthToken(false);
   // Set current user to empty object {} which will set isAuthenticated to false
-  dispatch(setCurrentUser({}));
+  //dispatch(setCurrentUser({}));
 };

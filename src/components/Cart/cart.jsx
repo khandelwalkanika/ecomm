@@ -3,11 +3,12 @@ import { Button, Card, ListGroup, Col, Container, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+// import {} from "../../actions/productActions";
 import {
-  yourCart,
   onDeletingFromCart,
   setPrice,
-} from "../../actions/productActions";
+  yourCart,
+} from "../../actions/userActions";
 import { withRouter } from "react-router-dom";
 class Cart extends Component {
   componentDidMount() {

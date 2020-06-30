@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Card, Table, Image } from "react-bootstrap";
-import { getProducts, onAddingToCart } from "../../actions/productActions";
+import { getProducts } from "../../actions/productActions";
+import { onAddingToCart } from "../../actions/userActions";
 //import myimagePath from "../../assets/images";
 class Listing extends Component {
   // state = {

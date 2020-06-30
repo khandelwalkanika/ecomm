@@ -18,6 +18,7 @@ import store from "./store";
 import AdminDashboard from "./components/Admin/dashboard";
 import ProductList from "./components/Admin/productList";
 import UpdateRecord from "./components/Admin/updateProduct";
+import SingleProduct from "./components/Product/singleProduct";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -25,17 +26,17 @@ if (localStorage.jwtToken) {
   setAuthToken(token);
   //const userRole = localStorage.userRole;
   // Decode token and get user info and expired token
-  const decoded = jwt_decode(token);
+  // const decoded = jwt_decode(token);
   // Set user and isAuthenticated
-  store.dispatch(setCurrentUser(decoded));
+  // store.dispatch(setCurrentUser(decoded));
   // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
-  if (decoded.exp < currentTime) {
-    // Logout user
-    store.dispatch(logoutUser());
-    // Redirect to login
-    window.location.href = "./";
-  }
+  // if (decoded.exp < currentTime) {
+  //   // Logout user
+  //   store.dispatch(logoutUser());
+  //   // Redirect to login
+  //   window.location.href = "./";
+  // }
 }
 
 class App extends Component {
@@ -166,6 +167,7 @@ class App extends Component {
                 necklace={this.state.listingsNecklace}
                 component={Listing}
               />
+              <Route exact path="/singleProduct/" component={SingleProduct} />
               <PrivateRoute
                 path="/cart"
                 exact

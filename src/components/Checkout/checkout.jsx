@@ -3,7 +3,7 @@ import { Button, Form, Col, Container, Card } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
-import { onCheckout } from "../../actions/productActions";
+import { onCheckout } from "../../actions/userActions";
 import classnames from "classnames";
 
 import { withRouter } from "react-router-dom";

@@ -3,7 +3,8 @@ import { Link, withRouter } from "react-router-dom";
 import { Button, Form, Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "../../actions/authActions";
+// import { loginUser } from "../../sagas/authSaga";
+import { loginUser } from "./../../actions/authActions";
 import classnames from "classnames";
 
 class LoginPage extends Component {
@@ -132,4 +133,10 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   errors: state.errors,
 });
+
+// const mapDispachToProps = (dispatch) => {
+//   return {
+//     loginUser: () => dispatch({ type: "SET_CURRENT_USER" }),
+//   };
+// };
 export default connect(mapStateToProps, { loginUser })(withRouter(LoginPage));
