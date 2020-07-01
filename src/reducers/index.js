@@ -1,15 +1,7 @@
 import { combineReducers } from "redux";
-import authReducer from "./authReducers";
-import errorReducer from "./errorReducers";
-import productListingReducer from "./productListingReducers";
-import adminProductReducer from "./adminProductReducer";
-import userReducer from "./userReducer";
+import productReducer from "./productReducer";
 export default combineReducers({
-  auth: authReducer,
-  productData: adminProductReducer,
-  userData: userReducer,
-  errors: errorReducer,
-  lists: productListingReducer,
+  productData: productReducer,
 });
 
 /* Root reducer */
