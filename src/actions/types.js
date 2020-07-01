@@ -4,6 +4,7 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const SET_LISTS = "SET_LISTS";
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const GET_PRODUCT = "GET_PRODUCT";
+export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const INCREMENT_ITEM = "INCREMENT_ITEM";

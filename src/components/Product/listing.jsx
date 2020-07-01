@@ -8,9 +8,6 @@ import { getProducts } from "../../actions/productActions";
 // import { onAddingToCart } from "../../actions/userActions";
 //import myimagePath from "../../assets/images";
 class Listing extends Component {
-  // state = {
-  //   productLocalData: [],
-  // };
   componentDidMount() {
     // if (this.props.productData.length === 0) {
     this.props.getProducts();
