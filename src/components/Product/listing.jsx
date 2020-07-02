@@ -1,19 +1,22 @@
 import React, { Component } from "react";
 import "./listing.css";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { withRouter, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Card, Table, Image } from "react-bootstrap";
-import { getProducts } from "../../actions/productActions";
-// import { onAddingToCart } from "../../actions/userActions";
-//import myimagePath from "../../assets/images";
+import { getProducts, onAddingToCart } from "../../actions/productActions";
+
 class Listing extends Component {
   componentDidMount() {
-    // if (this.props.productData.length === 0) {
-    this.props.getProducts();
+    if (this.props.productData.length === 0) {
+      this.props.getProducts();
+    }
+  }
+
+  onAdding(id) {
+    this.props.onAddingToCart(id);
   }
   render() {
-    console.log(this.props, "<---props");
     const { productData } = this.props;
     const rings = productData.filter(
       (product) => product.productType === "rings"
@@ -24,7 +27,6 @@ class Listing extends Component {
 
     return (
       <>
-        <h1>U R HERE</h1>
         <Card style={{ width: "70rem" }}>
           <Card.Header>Rings...</Card.Header>
           <Table responsive>
@@ -37,20 +39,25 @@ class Listing extends Component {
                       style={{ width: "16rem" }}
                       key={list.id}
                     >
-                      <Image
-                        className="listing-images"
-                        thumbnail
-                        src={list.imagePath}
-                      />
+                      <NavLink to={`./singleProduct/${list._id}`}>
+                        <Image
+                          className="listing-images"
+                          thumbnail
+                          src={list.imagePath}
+                        />
+                      </NavLink>
                       <Card.Body>
-                        <Card.Title> {list.productName}</Card.Title>
+                        <Card.Title onClick={() => {}}>
+                          {" "}
+                          {list.productName}
+                        </Card.Title>
                         <Card.Text>Price: ${list.price}</Card.Text>
-                        {/* <Button
+                        <Button
                           variant="primary"
                           onClick={this.onAdding.bind(this, list._id)}
                         >
                           Add to Cart
-                        </Button> */}
+                        </Button>
                         <span className="badge badge-light">
                           {list.numOfItems === 0
                             ? " "
@@ -86,12 +93,12 @@ class Listing extends Component {
                       <Card.Body>
                         <Card.Title> {list.productName}</Card.Title>
                         <Card.Text>Price: ${list.price}</Card.Text>
-                        {/* <Button
+                        <Button
                           variant="primary"
                           onClick={this.onAdding.bind(this, list._id)}
                         >
                           Add to Cart
-                        </Button> */}
+                        </Button>
                         <span className="badge badge-light">
                           {list.numOfItems === 0
                             ? " "
@@ -122,6 +129,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   getProducts: getProducts,
+  onAddingToCart: onAddingToCart,
 };
 export default connect(
   mapStateToProps,

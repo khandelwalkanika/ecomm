@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 import productReducer from "./productReducer";
+import authReducer from "./authReducers";
 export default combineReducers({
   productData: productReducer,
+  auth: authReducer,
 });
 
 /* Root reducer */
