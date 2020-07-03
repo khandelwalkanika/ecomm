@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 import productReducer from "./productReducer";
 import authReducer from "./authReducers";
+import adminReducer from "./adminReducer";
 export default combineReducers({
   productData: productReducer,
   auth: authReducer,
+  adminCrud: adminReducer,
 });
 
 /* Root reducer */

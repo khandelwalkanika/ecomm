@@ -8,6 +8,9 @@ import Checkout from "./components/Checkout/checkout";
 import Login from "./components/Auth/login";
 import Register from "./components/Auth/register";
 
+import AdminDashboard from "./components/Admin/dashboard";
+import ProductList from "./components/Admin/productList";
+import UpdateRecord from "./components/Admin/updateProduct";
 // import jwt_decode from "jwt-decode";
 // import setAuthToken from "./utils/setAuthToken";
 // import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -41,6 +44,21 @@ class App extends Component {
                 exact
                 path="/singleProduct/:id"
                 component={SingleProduct}
+              />
+              <PrivateRoute
+                exact
+                path="/dashboard"
+                component={AdminDashboard}
+              />
+              <PrivateRoute
+                exact
+                path="/productLists"
+                component={ProductList}
+              />
+              <PrivateRoute
+                exact
+                path="/updateProduct/:id"
+                component={UpdateRecord}
               />
             </Switch>
           </Router>

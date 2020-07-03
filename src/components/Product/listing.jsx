@@ -84,12 +84,14 @@ class Listing extends Component {
                       style={{ width: "16rem" }}
                       key={list.id}
                     >
-                      <Image
-                        className="listing-images"
-                        thumbnail
-                        src={list.imagePath}
-                        // src={require(`../../assets/images/${list.imagePath}`)}
-                      />
+                      <NavLink to={`./singleProduct/${list._id}`}>
+                        <Image
+                          className="listing-images"
+                          thumbnail
+                          src={list.imagePath}
+                          // src={require(`../../assets/images/${list.imagePath}`)}
+                        />
+                      </NavLink>
                       <Card.Body>
                         <Card.Title> {list.productName}</Card.Title>
                         <Card.Text>Price: ${list.price}</Card.Text>

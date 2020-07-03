@@ -4,7 +4,6 @@ import {
   CART_ITEM,
   SET_PRICE,
   DELETE_ITEM,
-  GET_ONE_PRODUCT,
 } from "./../actions/types";
 
 export const getProducts = () => ({

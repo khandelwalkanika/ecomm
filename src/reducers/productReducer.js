@@ -28,7 +28,6 @@ const productReducer = (state = initialState, action) => {
         ...state,
       };
     case GET_ALL_PRODUCTS:
-      console.log("GET ALL PRODUCTS::", state);
       return { ...state, productData: action.payload.products };
     case INCREMENT_ITEM:
       return {

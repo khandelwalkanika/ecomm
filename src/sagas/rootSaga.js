@@ -14,6 +14,11 @@ import {
   fetchOneWatcher,
 } from "./productSaga";
 import { loginWatcher, logoutWatcher, registerWatcher } from "./authSaga";
+import {
+  addNewProductWatcher,
+  updateProductWatcher,
+  deleteProductWatcher,
+} from "./adminSaga";
 // // export default function* rootSaga() {
 // //   yield all([loginUser()]);
 // //   //   yield takeLatest
@@ -22,11 +27,6 @@ import { loginWatcher, logoutWatcher, registerWatcher } from "./authSaga";
 export default function* rootSaga() {
   console.log(" in...ROOT SAGA........");
   yield all([
-    // fork(loginWatcher),
-    // fork(logoutWatcher),
-    // fork(registerWatcher),
-    // fork(actionWatcher),
-    // fork(incrementWatcher),
     loginWatcher(),
     logoutWatcher(),
     registerWatcher(),
@@ -37,5 +37,8 @@ export default function* rootSaga() {
     setPriceWatcher(),
     checkoutWatcher(),
     fetchOneWatcher(),
+    updateProductWatcher(),
+    deleteProductWatcher(),
+    addNewProductWatcher(),
   ]);
 }

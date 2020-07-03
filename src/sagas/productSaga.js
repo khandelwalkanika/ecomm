@@ -1,5 +1,5 @@
 import axios from "axios";
-import { put, takeLatest, call } from "redux-saga/effects";
+import { put, takeLatest } from "redux-saga/effects";
 import {
   GET_ALL_PRODUCTS,
   GET_PRODUCT,
@@ -21,11 +21,9 @@ import {
 // };
 //worker
 function* getAllProducts() {
-  console.log("GET ALL PRODUCT Api");
   const response = yield axios.get(
     "http://localhost:5000/api/users/getProducts"
   );
-  console.log("Api", response.data);
 
   const products = response.data.products;
   yield put({
@@ -107,7 +105,7 @@ function* onCheckout(orderPayload) {
     "http://localhost:5000/api/users/checkout",
     orderPayload.payload
   );
-  orderPayload.history.push("/listings"); // ERROR KK-not going to this route
+  orderPayload.payload.history.push("/listings"); // ERROR KK-not going to this route
   // yield put({
   //   type: PLACE_ORDER,
   //   payload: {},
